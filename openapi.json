@@ -1,0 +1,2709 @@
+{
+    "openapi": "3.1.0",
+    "info": {
+        "title": "DriverLink Delivery Management System",
+        "description": "Backend API for delivery management with driver assignment and real-time notifications",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/auth/register": {
+            "post": {
+                "tags": [
+                    "authentication"
+                ],
+                "summary": "Register User",
+                "description": "Register a new user (store or driver)\n\nThis endpoint creates a new user and sends a verification email.\nThe user will need to verify their email before they can log in.",
+                "operationId": "register_user_auth_register_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserCreate"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MessageResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/verify-email": {
+            "post": {
+                "tags": [
+                    "authentication"
+                ],
+                "summary": "Verify Email",
+                "description": "Verify user's email using the verification code.\n\nThis endpoint validates the verification code sent to the user's email\nand activates the user account if the code is valid.\n\nCan be called via:\n- GET /auth/verify-email?email=user@example.com&code=123456\n- POST {email: \"user@example.com\", code: \"123456\"}",
+                "operationId": "verify_email_auth_verify_email_post",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "title": "Email"
+                        }
+                    },
+                    {
+                        "name": "code",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "title": "Code"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/EmailVerificationResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "authentication"
+                ],
+                "summary": "Verify Email",
+                "description": "Verify user's email using the verification code.\n\nThis endpoint validates the verification code sent to the user's email\nand activates the user account if the code is valid.\n\nCan be called via:\n- GET /auth/verify-email?email=user@example.com&code=123456\n- POST {email: \"user@example.com\", code: \"123456\"}",
+                "operationId": "verify_email_auth_verify_email_get",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "title": "Email"
+                        }
+                    },
+                    {
+                        "name": "code",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "title": "Code"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "text/html": {
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/resend-verification": {
+            "post": {
+                "tags": [
+                    "authentication"
+                ],
+                "summary": "Resend Verification",
+                "description": "Resend verification email.\n\nUse this endpoint if the user didn't receive the verification email\nor if the verification code has expired.",
+                "operationId": "resend_verification_auth_resend_verification_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/EmailVerificationCreate"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/EmailVerificationResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/login": {
+            "post": {
+                "tags": [
+                    "authentication"
+                ],
+                "summary": "Login User",
+                "description": "Authenticate user and return JWT token\n\nOnly users with verified email addresses can log in.",
+                "operationId": "login_user_auth_login_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserLogin"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Token"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/me": {
+            "get": {
+                "tags": [
+                    "authentication"
+                ],
+                "summary": "Get Current User Info",
+                "description": "Get current user information",
+                "operationId": "get_current_user_info_auth_me_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/drivers/register": {
+            "post": {
+                "tags": [
+                    "drivers"
+                ],
+                "summary": "Register Driver",
+                "description": "Complete driver profile registration\n\nThis endpoint allows any authenticated user to register as a driver.\nThe user must be authenticated but doesn't need to have the driver role yet.\nAfter successful registration, the user's role will be updated to DRIVER.",
+                "operationId": "register_driver_drivers_register_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/DriverCreate"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Driver"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/drivers/upload-documents": {
+            "post": {
+                "tags": [
+                    "drivers"
+                ],
+                "summary": "Upload Driver Documents",
+                "description": "Upload driver license and ID documents",
+                "operationId": "upload_driver_documents_drivers_upload_documents_post",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Body_upload_driver_documents_drivers_upload_documents_post"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/drivers/location": {
+            "put": {
+                "tags": [
+                    "drivers"
+                ],
+                "summary": "Update Driver Location",
+                "description": "Update driver's current location",
+                "operationId": "update_driver_location_drivers_location_put",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/DriverLocationUpdate"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/drivers/status": {
+            "put": {
+                "tags": [
+                    "drivers"
+                ],
+                "summary": "Update Driver Status",
+                "description": "Update driver's availability status",
+                "operationId": "update_driver_status_drivers_status_put",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/DriverStatusUpdate"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/drivers/me": {
+            "get": {
+                "tags": [
+                    "drivers"
+                ],
+                "summary": "Get My Driver Profile",
+                "description": "Get current driver's profile",
+                "operationId": "get_my_driver_profile_drivers_me_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Driver"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/drivers/me/assigned-orders": {
+            "get": {
+                "tags": [
+                    "drivers"
+                ],
+                "summary": "Get Driver Assigned Orders",
+                "description": "Obtiene los trabajos asignados al conductor autenticado.\n\nDevuelve:\n- Órdenes activas (asignadas y en progreso)\n- Órdenes completadas hoy\n- Estadísticas de las órdenes",
+                "operationId": "get_driver_assigned_orders_drivers_me_assigned_orders_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DriverAssignedOrdersResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/orders": {
+            "post": {
+                "tags": [
+                    "orders"
+                ],
+                "summary": "Create Order",
+                "description": "Create a new delivery order\n\nThis endpoint creates a new delivery order and notifies available drivers in real-time.\n\n## Authentication\n- Requires JWT token in Authorization header: \"bearer <token>\"\n- Only store accounts can create orders\n\n## Request Headers\n- Authorization: Bearer <JWT_TOKEN>\n- Content-Type: application/json\n\n## Flow\n1. Creates the order in the database\n2. Calculates the optimal route using OSRM\n3. Finds suitable drivers based on location and availability\n4. Sends real-time notifications to available drivers via WebSocket and FCM\n\n## Response\nReturns the created order with estimated distance and duration",
+                "operationId": "create_order_orders_post",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/OrderCreate"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Order"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "orders"
+                ],
+                "summary": "Get Orders",
+                "description": "Get orders (filtered by current user type)",
+                "operationId": "get_orders_orders_get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "$ref": "#/components/schemas/OrderStatus"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "title": "Status"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "maximum": 100,
+                            "default": 50,
+                            "title": "Limit"
+                        }
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "default": 0,
+                            "title": "Offset"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OrderListResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/orders/available": {
+            "get": {
+                "tags": [
+                    "orders"
+                ],
+                "summary": "Get Available Orders",
+                "description": "Get nearby available (pending) orders for the current driver\n\n- Only returns orders with status PENDING and no assigned driver\n- Requires driver to be APPROVED and with current location set\n- Filters by configured MAX_DISTANCE_KM and sorts by distance",
+                "operationId": "get_available_orders_orders_available_get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "maximum": 100,
+                            "default": 50,
+                            "title": "Limit"
+                        }
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "default": 0,
+                            "title": "Offset"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OrderListResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/orders/{order_id}": {
+            "get": {
+                "tags": [
+                    "orders"
+                ],
+                "summary": "Get Order",
+                "description": "Get specific order details",
+                "operationId": "get_order_orders__order_id__get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "order_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Order Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Order"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/orders/{order_id}/accept": {
+            "post": {
+                "tags": [
+                    "orders"
+                ],
+                "summary": "Accept Order",
+                "description": "Accept a delivery order (first-come-first-served)",
+                "operationId": "accept_order_orders__order_id__accept_post",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "order_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Order Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/orders/{order_id}/reject": {
+            "post": {
+                "tags": [
+                    "orders"
+                ],
+                "summary": "Reject Order",
+                "description": "Reject a delivery order",
+                "operationId": "reject_order_orders__order_id__reject_post",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "order_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Order Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/orders/{order_id}/cancel": {
+            "post": {
+                "tags": [
+                    "orders"
+                ],
+                "summary": "Cancel Order",
+                "description": "Cancel an order that was previously accepted by the current driver.\n\nThis will:\n- Change the order status back to PENDING\n- Remove the driver assignment\n- Make the order available for other drivers to accept\n- Update the driver's status to AVAILABLE if they have no other active orders\n\nOnly the driver who accepted the order can cancel it, and only if the order\nis in ASSIGNED status and hasn't been picked up yet.",
+                "operationId": "cancel_order_orders__order_id__cancel_post",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "order_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Order Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/orders/{order_id}/driver": {
+            "get": {
+                "tags": [
+                    "orders"
+                ],
+                "summary": "Get Order Driver",
+                "operationId": "get_order_driver_orders__order_id__driver_get",
+                "parameters": [
+                    {
+                        "name": "order_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Order Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/orders/{order_id}/delete": {
+            "delete": {
+                "tags": [
+                    "orders"
+                ],
+                "summary": "Delete Order",
+                "operationId": "delete_order_orders__order_id__delete_delete",
+                "parameters": [
+                    {
+                        "name": "order_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Order Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/orders/{order_id}/status": {
+            "put": {
+                "tags": [
+                    "orders"
+                ],
+                "summary": "Update Order Status",
+                "description": "Update order status (pickup, delivered, etc.)",
+                "operationId": "update_order_status_orders__order_id__status_put",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "order_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Order Id"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/OrderStatusUpdate"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/orders/{order_id}/route": {
+            "get": {
+                "tags": [
+                    "orders"
+                ],
+                "summary": "Get Order Route",
+                "description": "Get detailed route information for a specific order\n\nThis endpoint calculates the complete route from pickup to delivery location\nusing OSRM routing service, including geometry, steps, and waypoints.\n\n## Response\nReturns detailed route information including:\n- Distance and duration\n- Complete route geometry (coordinates)\n- Step-by-step instructions\n- Waypoints information\n\n## Example Response\n```json\n{\n    \"distance_km\": 5.2,\n    \"duration_minutes\": 15,\n    \"geometry\": {\n        \"coordinates\": [[-74.0, 4.6], [-74.1, 4.7], ...],\n        \"type\": \"LineString\"\n    },\n    \"steps\": [\n        {\n            \"distance\": 120.5,\n            \"duration\": 25.3,\n            \"geometry\": {\"coordinates\": [[-74.0, 4.6], [-74.1, 4.7]], \"type\": \"LineString\"},\n            \"name\": \"Main Street\",\n            \"mode\": \"driving\"\n        }\n    ],\n    \"waypoints\": [...]\n}\n```",
+                "operationId": "get_order_route_orders__order_id__route_get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "order_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Order Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RouteResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/routes/calculate": {
+            "post": {
+                "tags": [
+                    "routes"
+                ],
+                "summary": "Calculate Route",
+                "description": "Calculate route between two arbitrary points\n\nThis endpoint allows calculating routes between any two geographic points\nusing the OSRM routing service. Useful for route planning and optimization.\n\n## Parameters\n- start_latitude: Starting point latitude (-90 to 90)\n- start_longitude: Starting point longitude (-180 to 180)\n- end_latitude: Ending point latitude (-90 to 90)\n- end_longitude: Ending point longitude (-180 to 180)\n\n## Response\nReturns the same detailed route information as the order route endpoint.",
+                "operationId": "calculate_route_routes_calculate_post",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "start_latitude",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "number",
+                            "maximum": 90,
+                            "minimum": -90,
+                            "description": "Starting latitude",
+                            "title": "Start Latitude"
+                        },
+                        "description": "Starting latitude"
+                    },
+                    {
+                        "name": "start_longitude",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "number",
+                            "maximum": 180,
+                            "minimum": -180,
+                            "description": "Starting longitude",
+                            "title": "Start Longitude"
+                        },
+                        "description": "Starting longitude"
+                    },
+                    {
+                        "name": "end_latitude",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "number",
+                            "maximum": 90,
+                            "minimum": -90,
+                            "description": "Ending latitude",
+                            "title": "End Latitude"
+                        },
+                        "description": "Ending latitude"
+                    },
+                    {
+                        "name": "end_longitude",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "number",
+                            "maximum": 180,
+                            "minimum": -180,
+                            "description": "Ending longitude",
+                            "title": "End Longitude"
+                        },
+                        "description": "Ending longitude"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RouteResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/routes/optimize": {
+            "post": {
+                "tags": [
+                    "routes"
+                ],
+                "summary": "Optimize Route",
+                "description": "Calculate the optimal route through multiple pickup and delivery points.\n\nThis endpoint finds the most efficient route that:\n1. Starts at the current location\n2. Visits all pickup points in optimal order\n3. Then visits all delivery points in optimal order\n\nThe optimization is based on travel time between points.\n\nNote: The route will always visit all pickup points before any delivery points.",
+                "operationId": "optimize_route_routes_optimize_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RouteOptimizationRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RouteOptimizationResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/admin/approval-requests": {
+            "get": {
+                "tags": [
+                    "admin"
+                ],
+                "summary": "Get Approval Requests",
+                "description": "Get a list of all drivers pending approval.\nRequires admin privileges.",
+                "operationId": "get_approval_requests_admin_approval_requests_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "$ref": "#/components/schemas/Driver"
+                                    },
+                                    "type": "array",
+                                    "title": "Response Get Approval Requests Admin Approval Requests Get"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/admin/approval-requests/{driver_id}/approve": {
+            "post": {
+                "tags": [
+                    "admin"
+                ],
+                "summary": "Approve Driver",
+                "description": "Approve a driver's registration.\nRequires admin privileges.",
+                "operationId": "approve_driver_admin_approval_requests__driver_id__approve_post",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "driver_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Driver Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MessageResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/approval-requests/{driver_id}/reject": {
+            "post": {
+                "tags": [
+                    "admin"
+                ],
+                "summary": "Reject Driver",
+                "description": "Reject a driver's registration.\nRequires admin privileges.",
+                "operationId": "reject_driver_admin_approval_requests__driver_id__reject_post",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "driver_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Driver Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MessageResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/stats/drivers": {
+            "get": {
+                "tags": [
+                    "statistics"
+                ],
+                "summary": "Get Driver Stats",
+                "description": "Get driver statistics",
+                "operationId": "get_driver_stats_stats_drivers_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/stats/orders": {
+            "get": {
+                "tags": [
+                    "statistics"
+                ],
+                "summary": "Get Order Stats",
+                "description": "Get order statistics for stores",
+                "operationId": "get_order_stats_stats_orders_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/fcm/token": {
+            "post": {
+                "tags": [
+                    "fcm"
+                ],
+                "summary": "Update Fcm Token",
+                "description": "Update the user's FCM token for push notifications.\n\nThis endpoint should be called by mobile clients after they receive a new FCM token\nor when the app starts to ensure the server has the latest token.\n\nArgs:\n    fcm_data: Contains the new FCM token\n    current_user: The authenticated user (injected by dependency)\n    db: Database session (injected by dependency)\n    \nReturns:\n    A success message confirming the token was updated",
+                "operationId": "update_fcm_token_fcm_token_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/FCMTokenUpdate"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MessageResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/health": {
+            "get": {
+                "summary": "Health Check",
+                "operationId": "health_check_health_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/": {
+            "get": {
+                "summary": "Root",
+                "operationId": "root__get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "ApprovalStatus": {
+                "type": "string",
+                "enum": [
+                    "pending",
+                    "approved",
+                    "rejected"
+                ],
+                "title": "ApprovalStatus"
+            },
+            "Body_upload_driver_documents_drivers_upload_documents_post": {
+                "properties": {
+                    "license_file": {
+                        "type": "string",
+                        "format": "binary",
+                        "title": "License File"
+                    },
+                    "id_document_file": {
+                        "type": "string",
+                        "format": "binary",
+                        "title": "Id Document File"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "license_file",
+                    "id_document_file"
+                ],
+                "title": "Body_upload_driver_documents_drivers_upload_documents_post"
+            },
+            "Driver": {
+                "properties": {
+                    "first_name": {
+                        "type": "string",
+                        "maxLength": 100,
+                        "minLength": 1,
+                        "title": "First Name"
+                    },
+                    "last_name": {
+                        "type": "string",
+                        "maxLength": 100,
+                        "minLength": 1,
+                        "title": "Last Name"
+                    },
+                    "phone_number": {
+                        "type": "string",
+                        "maxLength": 15,
+                        "minLength": 10,
+                        "title": "Phone Number"
+                    },
+                    "vehicle_type": {
+                        "$ref": "#/components/schemas/VehicleType"
+                    },
+                    "vehicle_plate": {
+                        "type": "string",
+                        "maxLength": 20,
+                        "minLength": 1,
+                        "title": "Vehicle Plate"
+                    },
+                    "vehicle_model": {
+                        "type": "string",
+                        "maxLength": 100,
+                        "minLength": 1,
+                        "title": "Vehicle Model"
+                    },
+                    "vehicle_year": {
+                        "type": "integer",
+                        "maximum": 2030.0,
+                        "minimum": 1950.0,
+                        "title": "Vehicle Year"
+                    },
+                    "id": {
+                        "type": "integer",
+                        "title": "Id"
+                    },
+                    "user_id": {
+                        "type": "integer",
+                        "title": "User Id"
+                    },
+                    "status": {
+                        "$ref": "#/components/schemas/DriverStatus"
+                    },
+                    "approval_status": {
+                        "$ref": "#/components/schemas/ApprovalStatus"
+                    },
+                    "current_latitude": {
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Current Latitude"
+                    },
+                    "current_longitude": {
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Current Longitude"
+                    },
+                    "last_location_update": {
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "format": "date-time"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Last Location Update"
+                    },
+                    "license_document": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "License Document"
+                    },
+                    "id_document": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Id Document"
+                    },
+                    "documents_submitted_at": {
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "format": "date-time"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Documents Submitted At"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "title": "Created At"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "first_name",
+                    "last_name",
+                    "phone_number",
+                    "vehicle_type",
+                    "vehicle_plate",
+                    "vehicle_model",
+                    "vehicle_year",
+                    "id",
+                    "user_id",
+                    "status",
+                    "approval_status",
+                    "current_latitude",
+                    "current_longitude",
+                    "last_location_update",
+                    "license_document",
+                    "id_document",
+                    "documents_submitted_at",
+                    "created_at"
+                ],
+                "title": "Driver"
+            },
+            "DriverAssignedOrdersResponse": {
+                "properties": {
+                    "active_orders": {
+                        "items": {
+                            "$ref": "#/components/schemas/Order"
+                        },
+                        "type": "array",
+                        "title": "Active Orders",
+                        "description": "Lista de órdenes activas asignadas al conductor (estados ASSIGNED e IN_PROGRESS)"
+                    },
+                    "completed_today": {
+                        "items": {
+                            "$ref": "#/components/schemas/Order"
+                        },
+                        "type": "array",
+                        "title": "Completed Today",
+                        "description": "Órdenes completadas por el conductor en el día actual"
+                    },
+                    "stats": {
+                        "additionalProperties": true,
+                        "type": "object",
+                        "title": "Stats",
+                        "description": "Estadísticas de las órdenes del conductor"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "active_orders",
+                    "completed_today",
+                    "stats"
+                ],
+                "title": "DriverAssignedOrdersResponse"
+            },
+            "DriverCreate": {
+                "properties": {
+                    "first_name": {
+                        "type": "string",
+                        "maxLength": 100,
+                        "minLength": 1,
+                        "title": "First Name"
+                    },
+                    "last_name": {
+                        "type": "string",
+                        "maxLength": 100,
+                        "minLength": 1,
+                        "title": "Last Name"
+                    },
+                    "phone_number": {
+                        "type": "string",
+                        "maxLength": 15,
+                        "minLength": 10,
+                        "title": "Phone Number"
+                    },
+                    "vehicle_type": {
+                        "$ref": "#/components/schemas/VehicleType"
+                    },
+                    "vehicle_plate": {
+                        "type": "string",
+                        "maxLength": 20,
+                        "minLength": 1,
+                        "title": "Vehicle Plate"
+                    },
+                    "vehicle_model": {
+                        "type": "string",
+                        "maxLength": 100,
+                        "minLength": 1,
+                        "title": "Vehicle Model"
+                    },
+                    "vehicle_year": {
+                        "type": "integer",
+                        "maximum": 2030.0,
+                        "minimum": 1950.0,
+                        "title": "Vehicle Year"
+                    },
+                    "user_id": {
+                        "type": "integer",
+                        "title": "User Id"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "first_name",
+                    "last_name",
+                    "phone_number",
+                    "vehicle_type",
+                    "vehicle_plate",
+                    "vehicle_model",
+                    "vehicle_year",
+                    "user_id"
+                ],
+                "title": "DriverCreate"
+            },
+            "DriverLocationUpdate": {
+                "properties": {
+                    "latitude": {
+                        "type": "number",
+                        "maximum": 90.0,
+                        "minimum": -90.0,
+                        "title": "Latitude"
+                    },
+                    "longitude": {
+                        "type": "number",
+                        "maximum": 180.0,
+                        "minimum": -180.0,
+                        "title": "Longitude"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "latitude",
+                    "longitude"
+                ],
+                "title": "DriverLocationUpdate"
+            },
+            "DriverStatus": {
+                "type": "string",
+                "enum": [
+                    "available",
+                    "busy",
+                    "offline"
+                ],
+                "title": "DriverStatus"
+            },
+            "DriverStatusUpdate": {
+                "properties": {
+                    "status": {
+                        "$ref": "#/components/schemas/DriverStatus"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "status"
+                ],
+                "title": "DriverStatusUpdate"
+            },
+            "EmailVerificationCreate": {
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "format": "email",
+                        "title": "Email"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "email"
+                ],
+                "title": "EmailVerificationCreate"
+            },
+            "EmailVerificationResponse": {
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "title": "Message"
+                    },
+                    "expires_in_minutes": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Expires In Minutes"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "message"
+                ],
+                "title": "EmailVerificationResponse"
+            },
+            "FCMTokenUpdate": {
+                "properties": {
+                    "fcm_token": {
+                        "type": "string",
+                        "minLength": 1,
+                        "title": "Fcm Token",
+                        "description": "Firebase Cloud Messaging token for the user's device"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "fcm_token"
+                ],
+                "title": "FCMTokenUpdate",
+                "description": "Schema for updating a user's FCM token for push notifications."
+            },
+            "HTTPValidationError": {
+                "properties": {
+                    "detail": {
+                        "items": {
+                            "$ref": "#/components/schemas/ValidationError"
+                        },
+                        "type": "array",
+                        "title": "Detail"
+                    }
+                },
+                "type": "object",
+                "title": "HTTPValidationError"
+            },
+            "MessageResponse": {
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "title": "Message"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "message"
+                ],
+                "title": "MessageResponse"
+            },
+            "Order": {
+                "properties": {
+                    "order_number": {
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "maxLength": 50,
+                                "minLength": 1
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Order Number"
+                    },
+                    "customer_name": {
+                        "type": "string",
+                        "maxLength": 200,
+                        "minLength": 1,
+                        "title": "Customer Name"
+                    },
+                    "customer_phone": {
+                        "type": "string",
+                        "maxLength": 15,
+                        "minLength": 10,
+                        "title": "Customer Phone"
+                    },
+                    "pickup_address": {
+                        "type": "string",
+                        "minLength": 1,
+                        "title": "Pickup Address"
+                    },
+                    "pickup_latitude": {
+                        "type": "number",
+                        "maximum": 90.0,
+                        "minimum": -90.0,
+                        "title": "Pickup Latitude"
+                    },
+                    "pickup_longitude": {
+                        "type": "number",
+                        "maximum": 180.0,
+                        "minimum": -180.0,
+                        "title": "Pickup Longitude"
+                    },
+                    "pickup_instructions": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Pickup Instructions"
+                    },
+                    "delivery_address": {
+                        "type": "string",
+                        "minLength": 1,
+                        "title": "Delivery Address"
+                    },
+                    "delivery_latitude": {
+                        "type": "number",
+                        "maximum": 90.0,
+                        "minimum": -90.0,
+                        "title": "Delivery Latitude"
+                    },
+                    "delivery_longitude": {
+                        "type": "number",
+                        "maximum": 180.0,
+                        "minimum": -180.0,
+                        "title": "Delivery Longitude"
+                    },
+                    "delivery_instructions": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Delivery Instructions"
+                    },
+                    "items_description": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Items Description"
+                    },
+                    "weight_kg": {
+                        "anyOf": [
+                            {
+                                "type": "number",
+                                "minimum": 0.0
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Weight Kg"
+                    },
+                    "value": {
+                        "anyOf": [
+                            {
+                                "type": "number",
+                                "minimum": 0.0
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Value"
+                    },
+                    "id": {
+                        "type": "integer",
+                        "title": "Id"
+                    },
+                    "store_id": {
+                        "type": "integer",
+                        "title": "Store Id"
+                    },
+                    "store_name": {
+                        "type": "string",
+                        "title": "Store Name"
+                    },
+                    "driver_id": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Driver Id"
+                    },
+                    "status": {
+                        "$ref": "#/components/schemas/OrderStatus"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "title": "Created At"
+                    },
+                    "assigned_at": {
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "format": "date-time"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Assigned At"
+                    },
+                    "picked_up_at": {
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "format": "date-time"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Picked Up At"
+                    },
+                    "delivered_at": {
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "format": "date-time"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Delivered At"
+                    },
+                    "estimated_distance_km": {
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Estimated Distance Km"
+                    },
+                    "estimated_duration_minutes": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Estimated Duration Minutes"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "customer_name",
+                    "customer_phone",
+                    "pickup_address",
+                    "pickup_latitude",
+                    "pickup_longitude",
+                    "delivery_address",
+                    "delivery_latitude",
+                    "delivery_longitude",
+                    "id",
+                    "store_id",
+                    "store_name",
+                    "driver_id",
+                    "status",
+                    "created_at",
+                    "assigned_at",
+                    "picked_up_at",
+                    "delivered_at",
+                    "estimated_distance_km",
+                    "estimated_duration_minutes"
+                ],
+                "title": "Order"
+            },
+            "OrderCreate": {
+                "properties": {
+                    "order_number": {
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "maxLength": 50,
+                                "minLength": 1
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Order Number"
+                    },
+                    "customer_name": {
+                        "type": "string",
+                        "maxLength": 200,
+                        "minLength": 1,
+                        "title": "Customer Name"
+                    },
+                    "customer_phone": {
+                        "type": "string",
+                        "maxLength": 15,
+                        "minLength": 10,
+                        "title": "Customer Phone"
+                    },
+                    "pickup_address": {
+                        "type": "string",
+                        "minLength": 1,
+                        "title": "Pickup Address"
+                    },
+                    "pickup_latitude": {
+                        "type": "number",
+                        "maximum": 90.0,
+                        "minimum": -90.0,
+                        "title": "Pickup Latitude"
+                    },
+                    "pickup_longitude": {
+                        "type": "number",
+                        "maximum": 180.0,
+                        "minimum": -180.0,
+                        "title": "Pickup Longitude"
+                    },
+                    "pickup_instructions": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Pickup Instructions"
+                    },
+                    "delivery_address": {
+                        "type": "string",
+                        "minLength": 1,
+                        "title": "Delivery Address"
+                    },
+                    "delivery_latitude": {
+                        "type": "number",
+                        "maximum": 90.0,
+                        "minimum": -90.0,
+                        "title": "Delivery Latitude"
+                    },
+                    "delivery_longitude": {
+                        "type": "number",
+                        "maximum": 180.0,
+                        "minimum": -180.0,
+                        "title": "Delivery Longitude"
+                    },
+                    "delivery_instructions": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Delivery Instructions"
+                    },
+                    "items_description": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Items Description"
+                    },
+                    "weight_kg": {
+                        "anyOf": [
+                            {
+                                "type": "number",
+                                "minimum": 0.0
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Weight Kg"
+                    },
+                    "value": {
+                        "anyOf": [
+                            {
+                                "type": "number",
+                                "minimum": 0.0
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Value"
+                    },
+                    "store_name": {
+                        "type": "string",
+                        "maxLength": 200,
+                        "minLength": 1,
+                        "title": "Store Name"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "customer_name",
+                    "customer_phone",
+                    "pickup_address",
+                    "pickup_latitude",
+                    "pickup_longitude",
+                    "delivery_address",
+                    "delivery_latitude",
+                    "delivery_longitude",
+                    "store_name"
+                ],
+                "title": "OrderCreate"
+            },
+            "OrderListResponse": {
+                "properties": {
+                    "orders": {
+                        "items": {
+                            "$ref": "#/components/schemas/Order"
+                        },
+                        "type": "array",
+                        "title": "Orders"
+                    },
+                    "total": {
+                        "type": "integer",
+                        "title": "Total"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "orders",
+                    "total"
+                ],
+                "title": "OrderListResponse"
+            },
+            "OrderStatus": {
+                "type": "string",
+                "enum": [
+                    "pending",
+                    "assigned",
+                    "in_progress",
+                    "delivered",
+                    "cancelled"
+                ],
+                "title": "OrderStatus"
+            },
+            "OrderStatusUpdate": {
+                "properties": {
+                    "status": {
+                        "$ref": "#/components/schemas/OrderStatus"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "status"
+                ],
+                "title": "OrderStatusUpdate"
+            },
+            "RouteGeometry": {
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "title": "Type",
+                        "default": "LineString"
+                    },
+                    "coordinates": {
+                        "items": {
+                            "prefixItems": [
+                                {
+                                    "type": "number"
+                                },
+                                {
+                                    "type": "number"
+                                }
+                            ],
+                            "type": "array",
+                            "maxItems": 2,
+                            "minItems": 2
+                        },
+                        "type": "array",
+                        "title": "Coordinates"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "coordinates"
+                ],
+                "title": "RouteGeometry",
+                "description": "Schema for route geometry data."
+            },
+            "RouteOptimizationRequest": {
+                "properties": {
+                    "current_location": {
+                        "prefixItems": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "number"
+                            }
+                        ],
+                        "type": "array",
+                        "maxItems": 2,
+                        "minItems": 2,
+                        "title": "Current Location",
+                        "description": "Current location as (latitude, longitude)",
+                        "example": [
+                            4.710989,
+                            -74.072092
+                        ]
+                    },
+                    "pickup_points": {
+                        "items": {
+                            "prefixItems": [
+                                {
+                                    "type": "number"
+                                },
+                                {
+                                    "type": "number"
+                                }
+                            ],
+                            "type": "array",
+                            "maxItems": 2,
+                            "minItems": 2
+                        },
+                        "type": "array",
+                        "minItems": 1,
+                        "title": "Pickup Points",
+                        "description": "List of pickup points as (latitude, longitude) tuples",
+                        "example": [
+                            [
+                                4.711,
+                                -74.073
+                            ],
+                            [
+                                4.712,
+                                -74.074
+                            ]
+                        ]
+                    },
+                    "delivery_points": {
+                        "items": {
+                            "prefixItems": [
+                                {
+                                    "type": "number"
+                                },
+                                {
+                                    "type": "number"
+                                }
+                            ],
+                            "type": "array",
+                            "maxItems": 2,
+                            "minItems": 2
+                        },
+                        "type": "array",
+                        "minItems": 1,
+                        "title": "Delivery Points",
+                        "description": "List of delivery points as (latitude, longitude) tuples. If multiple points are provided, the route will be optimized to visit all of them after pickup points.",
+                        "example": [
+                            [
+                                4.715,
+                                -74.07
+                            ],
+                            [
+                                4.716,
+                                -74.071
+                            ]
+                        ]
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "current_location",
+                    "pickup_points",
+                    "delivery_points"
+                ],
+                "title": "RouteOptimizationRequest"
+            },
+            "RouteOptimizationResponse": {
+                "properties": {
+                    "waypoints": {
+                        "items": {
+                            "prefixItems": [
+                                {
+                                    "type": "number"
+                                },
+                                {
+                                    "type": "number"
+                                }
+                            ],
+                            "type": "array",
+                            "maxItems": 2,
+                            "minItems": 2
+                        },
+                        "type": "array",
+                        "title": "Waypoints",
+                        "description": "List of waypoints in optimal order"
+                    },
+                    "total_distance_km": {
+                        "type": "number",
+                        "title": "Total Distance Km",
+                        "description": "Total distance of the optimized route in kilometers"
+                    },
+                    "total_duration_minutes": {
+                        "type": "number",
+                        "title": "Total Duration Minutes",
+                        "description": "Total estimated duration of the optimized route in minutes"
+                    },
+                    "legs": {
+                        "items": {
+                            "additionalProperties": true,
+                            "type": "object"
+                        },
+                        "type": "array",
+                        "title": "Legs",
+                        "description": "List of route legs with distance and duration between waypoints"
+                    },
+                    "geometry": {
+                        "additionalProperties": true,
+                        "type": "object",
+                        "title": "Geometry",
+                        "description": "GeoJSON LineString geometry of the complete route"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "waypoints",
+                    "total_distance_km",
+                    "total_duration_minutes",
+                    "legs",
+                    "geometry"
+                ],
+                "title": "RouteOptimizationResponse"
+            },
+            "RouteResponse": {
+                "properties": {
+                    "distance_km": {
+                        "type": "number",
+                        "title": "Distance Km"
+                    },
+                    "duration_minutes": {
+                        "type": "integer",
+                        "title": "Duration Minutes"
+                    },
+                    "geometry": {
+                        "$ref": "#/components/schemas/RouteGeometry"
+                    },
+                    "steps": {
+                        "items": {
+                            "$ref": "#/components/schemas/RouteStep"
+                        },
+                        "type": "array",
+                        "title": "Steps"
+                    },
+                    "waypoints": {
+                        "items": {
+                            "additionalProperties": true,
+                            "type": "object"
+                        },
+                        "type": "array",
+                        "title": "Waypoints"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "distance_km",
+                    "duration_minutes",
+                    "geometry",
+                    "steps",
+                    "waypoints"
+                ],
+                "title": "RouteResponse"
+            },
+            "RouteStep": {
+                "properties": {
+                    "distance": {
+                        "type": "number",
+                        "title": "Distance"
+                    },
+                    "duration": {
+                        "type": "number",
+                        "title": "Duration"
+                    },
+                    "geometry": {
+                        "additionalProperties": true,
+                        "type": "object",
+                        "title": "Geometry"
+                    },
+                    "name": {
+                        "type": "string",
+                        "title": "Name"
+                    },
+                    "mode": {
+                        "type": "string",
+                        "title": "Mode"
+                    },
+                    "type": {
+                        "type": "string",
+                        "title": "Type",
+                        "default": "LineString"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "distance",
+                    "duration",
+                    "geometry",
+                    "name",
+                    "mode"
+                ],
+                "title": "RouteStep"
+            },
+            "Token": {
+                "properties": {
+                    "access_token": {
+                        "type": "string",
+                        "title": "Access Token"
+                    },
+                    "token_type": {
+                        "type": "string",
+                        "title": "Token Type"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "access_token",
+                    "token_type"
+                ],
+                "title": "Token"
+            },
+            "User": {
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "format": "email",
+                        "title": "Email"
+                    },
+                    "user_type": {
+                        "$ref": "#/components/schemas/UserType"
+                    },
+                    "id": {
+                        "type": "integer",
+                        "title": "Id"
+                    },
+                    "is_active": {
+                        "type": "boolean",
+                        "title": "Is Active"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "title": "Created At"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "email",
+                    "user_type",
+                    "id",
+                    "is_active",
+                    "created_at"
+                ],
+                "title": "User"
+            },
+            "UserCreate": {
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "format": "email",
+                        "title": "Email"
+                    },
+                    "user_type": {
+                        "$ref": "#/components/schemas/UserType"
+                    },
+                    "password": {
+                        "type": "string",
+                        "minLength": 8,
+                        "title": "Password"
+                    },
+                    "fcm_token": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Fcm Token"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "email",
+                    "user_type",
+                    "password"
+                ],
+                "title": "UserCreate"
+            },
+            "UserLogin": {
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "format": "email",
+                        "title": "Email"
+                    },
+                    "password": {
+                        "type": "string",
+                        "title": "Password"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "email",
+                    "password"
+                ],
+                "title": "UserLogin"
+            },
+            "UserType": {
+                "type": "string",
+                "enum": [
+                    "store",
+                    "driver",
+                    "admin"
+                ],
+                "title": "UserType"
+            },
+            "ValidationError": {
+                "properties": {
+                    "loc": {
+                        "items": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "integer"
+                                }
+                            ]
+                        },
+                        "type": "array",
+                        "title": "Location"
+                    },
+                    "msg": {
+                        "type": "string",
+                        "title": "Message"
+                    },
+                    "type": {
+                        "type": "string",
+                        "title": "Error Type"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "loc",
+                    "msg",
+                    "type"
+                ],
+                "title": "ValidationError"
+            },
+            "VehicleType": {
+                "type": "string",
+                "enum": [
+                    "motorcycle",
+                    "car",
+                    "van",
+                    "truck"
+                ],
+                "title": "VehicleType"
+            }
+        },
+        "securitySchemes": {
+            "HTTPBearer": {
+                "type": "http",
+                "scheme": "bearer"
+            }
+        }
+    }
+}
