@@ -1,0 +1,190 @@
+[13702:1022/203841.536656:ERROR:object_proxy.cc(576)] Failed to call method: org.freedesktop.DBus.Properties.Get: object_path= /org/freedesktop/portal/desktop: org.freedesktop.DBus.Error.InvalidArgs: No such interface “org.freedesktop.portal.FileChooser”
+[13702:1022/203841.536739:ERROR:select_file_dialog_linux_portal.cc(308)] Failed to read portal version property
+[90m[main 2025-10-23T00:38:41.721Z][0m WindsurfWindowsMainManager: Window will load {
+  windowId: 1,
+  workspaceUri: {
+    id: 'f3f21304e4806562428736c50ef10394',
+    uri: ln {
+      scheme: 'file',
+      authority: '',
+      path: '/home/ph03nix/Programming/Flutter/driverlink-approval',
+      query: '',
+      fragment: '',
+      _formatted: 'file:///home/ph03nix/Programming/Flutter/driverlink-approval',
+      _fsPath: '/home/ph03nix/Programming/Flutter/driverlink-approval'
+    }
+  }
+}
+[90m[main 2025-10-23T00:38:41.735Z][0m update#setState idle
+[90m[main 2025-10-23T00:38:41.808Z][0m WindsurfWindowsMainManager: Window will close {
+  windowId: 1,
+  workspaceUri: {
+    id: 'f3f21304e4806562428736c50ef10394',
+    uri: ln {
+      scheme: 'file',
+      authority: '',
+      path: '/home/ph03nix/Programming/Flutter/driverlink-approval',
+      query: '',
+      fragment: '',
+      _formatted: 'file:///home/ph03nix/Programming/Flutter/driverlink-approval',
+      _fsPath: '/home/ph03nix/Programming/Flutter/driverlink-approval'
+    }
+  }
+}
+[90m[main 2025-10-23T00:38:41.848Z][0m WindsurfWindowsMainManager: Shutdown initiated, capturing current window group state
+[13810:1022/203843.759236:ERROR:object_proxy.cc(576)] Failed to call method: org.freedesktop.DBus.Properties.Get: object_path= /org/freedesktop/portal/desktop: org.freedesktop.DBus.Error.InvalidArgs: No such interface “org.freedesktop.portal.FileChooser”
+[13810:1022/203843.759288:ERROR:select_file_dialog_linux_portal.cc(308)] Failed to read portal version property
+[90m[main 2025-10-23T00:38:43.942Z][0m WindsurfWindowsMainManager: Window will load {
+  windowId: 1,
+  workspaceUri: {
+    id: 'f3f21304e4806562428736c50ef10394',
+    uri: ln {
+      scheme: 'file',
+      authority: '',
+      path: '/home/ph03nix/Programming/Flutter/driverlink-approval',
+      query: '',
+      fragment: '',
+      _formatted: 'file:///home/ph03nix/Programming/Flutter/driverlink-approval',
+      _fsPath: '/home/ph03nix/Programming/Flutter/driverlink-approval'
+    }
+  }
+}
+[90m[main 2025-10-23T00:38:43.955Z][0m update#setState idle
+[13849:1022/203847.225788:ERROR:gl_surface_presentation_helper.cc(260)] GetVSyncParametersIfAvailable() failed for 1 times!
+[13849:1022/203859.507103:ERROR:gl_surface_presentation_helper.cc(260)] GetVSyncParametersIfAvailable() failed for 2 times!
+[90m[main 2025-10-23T00:39:13.957Z][0m update#setState checking for updates
+[13849:1022/203914.003363:ERROR:gl_surface_presentation_helper.cc(260)] GetVSyncParametersIfAvailable() failed for 3 times!
+[90m[main 2025-10-23T00:39:14.262Z][0m update#setState idle
+[90m[main 2025-10-23T01:39:13.978Z][0m update#setState checking for updates
+[90m[main 2025-10-23T01:39:15.160Z][0m update#setState idle
+[90m[main 2025-10-23T01:49:21.196Z][0m WindsurfWindowsMainManager: Window will load {
+  windowId: 2,
+  workspaceUri: {
+    id: '5695c1551935f6d5b679568693f7e7a4',
+    uri: ln {
+      scheme: 'file',
+      authority: '',
+      path: '/home/ph03nix/Programming/Flutter/amacuba-notifications-panel',
+      query: '',
+      fragment: '',
+      _formatted: 'file:///home/ph03nix/Programming/Flutter/amacuba-notifications-panel',
+      _fsPath: '/home/ph03nix/Programming/Flutter/amacuba-notifications-panel'
+    }
+  }
+}
+[90m[main 2025-10-23T02:08:15.026Z][0m WindsurfWindowsMainManager: Window will close {
+  windowId: 2,
+  workspaceUri: {
+    id: '5695c1551935f6d5b679568693f7e7a4',
+    uri: ln {
+      scheme: 'file',
+      authority: '',
+      path: '/home/ph03nix/Programming/Flutter/amacuba-notifications-panel',
+      query: '',
+      fragment: '',
+      _formatted: 'file:///home/ph03nix/Programming/Flutter/amacuba-notifications-panel',
+      _fsPath: '/home/ph03nix/Programming/Flutter/amacuba-notifications-panel'
+    }
+  }
+}
+[90m[main 2025-10-23T02:08:15.423Z][0m Extension host with pid 28053 exited with code: 0, signal: unknown.
+[91m[main 2025-10-23T02:08:15.433Z][0m [UtilityProcess id: 2, type: fileWatcher, pid: 28034]: crashed with code 15 and reason 'killed'
+[91m[main 2025-10-23T02:08:15.433Z][0m === UTILITY PROCESS CRASH REPORT ===
+[91m[main 2025-10-23T02:08:15.433Z][0m Time: 2025-10-23T02:08:15.433Z
+[91m[main 2025-10-23T02:08:15.433Z][0m PID: 28034, Exit Code: 15 (Unknown exit code (15)), Reason: killed
+[91m[main 2025-10-23T02:08:15.433Z][0m Process Type: fileWatcher
+[91m[main 2025-10-23T02:08:15.434Z][0m Process ID: 2
+[91m[main 2025-10-23T02:08:15.434Z][0m Entry Point: vs/platform/files/node/watcher/watcherMain
+[91m[main 2025-10-23T02:08:15.434Z][0m Main Process Memory: RSS=212MB, Heap=19MB, External=4MB
+[91m[main 2025-10-23T02:08:15.434Z][0m System Information:
+[91m[main 2025-10-23T02:08:15.434Z][0m   - Node Version: v20.19.0
+[91m[main 2025-10-23T02:08:15.434Z][0m   - Platform: linux_x64
+[91m[main 2025-10-23T02:08:15.434Z][0m   - Electron Version: 34.5.1
+[91m[main 2025-10-23T02:08:15.434Z][0m Active Utility Processes: 4 processes
+[91m[main 2025-10-23T02:08:15.434Z][0m Sample Processes:
+[91m[main 2025-10-23T02:08:15.434Z][0m   - shared-process (PID: 13920)
+[91m[main 2025-10-23T02:08:15.434Z][0m   - fileWatcher [1] (PID: 13921)
+[91m[main 2025-10-23T02:08:15.435Z][0m   - extensionHost [1] (PID: 13940)
+[91m[main 2025-10-23T02:08:15.435Z][0m   - ptyHost (PID: 15002)
+[91m[main 2025-10-23T02:08:15.435Z][0m === END UTILITY PROCESS CRASH REPORT ===
+[90m[main 2025-10-23T02:08:17.823Z][0m WindsurfWindowsMainManager: Window will close {
+  windowId: 1,
+  workspaceUri: {
+    id: 'f3f21304e4806562428736c50ef10394',
+    uri: ln {
+      scheme: 'file',
+      authority: '',
+      path: '/home/ph03nix/Programming/Flutter/driverlink-approval',
+      query: '',
+      fragment: '',
+      _formatted: 'file:///home/ph03nix/Programming/Flutter/driverlink-approval',
+      _fsPath: '/home/ph03nix/Programming/Flutter/driverlink-approval'
+    }
+  }
+}
+[90m[main 2025-10-23T02:08:17.832Z][0m WindsurfWindowsMainManager: Shutdown initiated, capturing current window group state
+[90m[main 2025-10-23T02:08:17.957Z][0m Extension host with pid 13940 exited with code: 0, signal: unknown.
+[38983:1022/222044.898243:ERROR:object_proxy.cc(576)] Failed to call method: org.freedesktop.DBus.Properties.Get: object_path= /org/freedesktop/portal/desktop: org.freedesktop.DBus.Error.InvalidArgs: No such interface “org.freedesktop.portal.FileChooser”
+[38983:1022/222044.898305:ERROR:select_file_dialog_linux_portal.cc(308)] Failed to read portal version property
+[1239:1023/163515.554478:ERROR:object_proxy.cc(576)] Failed to call method: org.freedesktop.DBus.Properties.Get: object_path= /org/freedesktop/portal/desktop: org.freedesktop.DBus.Error.InvalidArgs: No such interface “org.freedesktop.portal.FileChooser”
+[1239:1023/163515.555038:ERROR:select_file_dialog_linux_portal.cc(308)] Failed to read portal version property
+[90m[main 2025-10-23T20:35:15.851Z][0m WindsurfWindowsMainManager: Window will load {
+  windowId: 1,
+  workspaceUri: {
+    id: 'f3f21304e4806562428736c50ef10394',
+    uri: ln {
+      scheme: 'file',
+      authority: '',
+      path: '/home/ph03nix/Programming/Flutter/driverlink-approval',
+      query: '',
+      fragment: '',
+      _formatted: 'file:///home/ph03nix/Programming/Flutter/driverlink-approval',
+      _fsPath: '/home/ph03nix/Programming/Flutter/driverlink-approval'
+    }
+  }
+}
+[90m[main 2025-10-23T20:35:15.866Z][0m update#setState idle
+[90m[main 2025-10-23T20:35:15.921Z][0m WindsurfWindowsMainManager: Window will close {
+  windowId: 1,
+  workspaceUri: {
+    id: 'f3f21304e4806562428736c50ef10394',
+    uri: ln {
+      scheme: 'file',
+      authority: '',
+      path: '/home/ph03nix/Programming/Flutter/driverlink-approval',
+      query: '',
+      fragment: '',
+      _formatted: 'file:///home/ph03nix/Programming/Flutter/driverlink-approval',
+      _fsPath: '/home/ph03nix/Programming/Flutter/driverlink-approval'
+    }
+  }
+}
+[90m[main 2025-10-23T20:35:15.934Z][0m WindsurfWindowsMainManager: Shutdown initiated, capturing current window group state
+[1347:1023/163517.696599:ERROR:object_proxy.cc(576)] Failed to call method: org.freedesktop.DBus.Properties.Get: object_path= /org/freedesktop/portal/desktop: org.freedesktop.DBus.Error.InvalidArgs: No such interface “org.freedesktop.portal.FileChooser”
+[1347:1023/163517.696649:ERROR:select_file_dialog_linux_portal.cc(308)] Failed to read portal version property
+[90m[main 2025-10-23T20:35:17.877Z][0m WindsurfWindowsMainManager: Window will load {
+  windowId: 1,
+  workspaceUri: {
+    id: 'f3f21304e4806562428736c50ef10394',
+    uri: ln {
+      scheme: 'file',
+      authority: '',
+      path: '/home/ph03nix/Programming/Flutter/driverlink-approval',
+      query: '',
+      fragment: '',
+      _formatted: 'file:///home/ph03nix/Programming/Flutter/driverlink-approval',
+      _fsPath: '/home/ph03nix/Programming/Flutter/driverlink-approval'
+    }
+  }
+}
+[90m[main 2025-10-23T20:35:17.892Z][0m update#setState idle
+[1385:1023/163543.899928:ERROR:gl_surface_presentation_helper.cc(260)] GetVSyncParametersIfAvailable() failed for 1 times!
+[91m[main 2025-10-23T20:35:47.023Z][0m #1: https://windsurf-stable.codeium.com/api/update/linux-x64/stable/e070c40b16843043362e035ebe6169be63af2af9 - error undefined net::ERR_NETWORK_CHANGED
+[91m[main 2025-10-23T20:35:47.024Z][0m update#isLatestVersion(): failed to check for updates
+[91m[main 2025-10-23T20:35:47.024Z][0m Error: net::ERR_NETWORK_CHANGED
+    at SimpleURLLoaderWrapper.<anonymous> (node:electron/js2c/browser_init:2:118774)
+    at SimpleURLLoaderWrapper.emit (node:events:524:28)
+[90m[main 2025-10-23T20:35:47.893Z][0m update#setState checking for updates
+[90m[main 2025-10-23T20:35:48.915Z][0m update#setState available for download
+[1385:1023/163709.177045:ERROR:gl_surface_presentation_helper.cc(260)] GetVSyncParametersIfAvailable() failed for 2 times!
+[1385:1023/163709.180608:ERROR:gl_surface_presentation_helper.cc(260)] GetVSyncParametersIfAvailable() failed for 3 times!

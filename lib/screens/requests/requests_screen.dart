@@ -4,6 +4,8 @@ import 'package:driverlink_approval/providers/requests_provider.dart';
 import 'package:driverlink_approval/config/theme.dart';
 import 'package:driverlink_approval/models/request.dart';
 import 'package:driverlink_approval/screens/requests/document_viewer_screen.dart';
+import 'package:driverlink_approval/api/auth/auth_service.dart';
+import 'package:driverlink_approval/screens/auth/login_screen.dart';
 
 class RequestsScreen extends StatefulWidget {
   const RequestsScreen({Key? key}) : super(key: key);
@@ -30,6 +32,74 @@ class _RequestsScreenState extends State<RequestsScreen> {
         backgroundColor: AppTheme.primaryColor,
         foregroundColor: Colors.white,
         elevation: 0,
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            const DrawerHeader(
+              decoration: BoxDecoration(
+                color: AppTheme.primaryColor,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    'Menú',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            ListTile(
+              leading: const Icon(Icons.exit_to_app, color: Colors.red),
+              title: const Text('Cerrar sesión', style: TextStyle(color: Colors.red)),
+              onTap: () async {
+                // Cerrar el drawer primero
+                Navigator.pop(context);
+                
+                // Mostrar diálogo de confirmación
+                final shouldLogout = await showDialog<bool>(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: const Text('Cerrar sesión'),
+                    content: const Text('¿Estás seguro de que quieres cerrar sesión?'),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.pop(context, false),
+                        child: const Text('Cancelar'),
+                      ),
+                      TextButton(
+                        onPressed: () => Navigator.pop(context, true),
+                        style: TextButton.styleFrom(foregroundColor: Colors.red),
+                        child: const Text('Cerrar sesión'),
+                      ),
+                    ],
+                  ),
+                );
+
+                if (shouldLogout == true) {
+                  // Realizar el logout
+                  await AuthService().logout();
+                  
+                  // Navegar a la pantalla de login y eliminar todas las rutas anteriores
+                  if (mounted) {
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (context) => const LoginScreen()),
+                      (route) => false,
+                    );
+                  }
+                }
+              },
+            ),
+          ],
+        ),
       ),
       body: Consumer<RequestsProvider>(
         builder: (context, provider, child) {
