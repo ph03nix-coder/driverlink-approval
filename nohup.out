@@ -188,3 +188,230 @@
 [90m[main 2025-10-23T20:35:48.915Z][0m update#setState available for download
 [1385:1023/163709.177045:ERROR:gl_surface_presentation_helper.cc(260)] GetVSyncParametersIfAvailable() failed for 2 times!
 [1385:1023/163709.180608:ERROR:gl_surface_presentation_helper.cc(260)] GetVSyncParametersIfAvailable() failed for 3 times!
+[90m[main 2025-10-23T21:10:33.539Z][0m WindsurfWindowsMainManager: Window will load {
+  windowId: 2,
+  workspaceUri: {
+    id: '76b2fab2afacd678665839203268c0dc',
+    uri: ln {
+      scheme: 'file',
+      authority: '',
+      path: '/home/ph03nix/Programming/Python/applog-backend',
+      query: '',
+      fragment: '',
+      _formatted: 'file:///home/ph03nix/Programming/Python/applog-backend',
+      _fsPath: '/home/ph03nix/Programming/Python/applog-backend'
+    }
+  }
+}
+[1347:1023/171416.139020:ERROR:browser_main_loop.cc(278)] GLib-GObject: ../glib/gobject/gsignal.c:2700: instance '0x1b14039cf040' has no handler with id '1307'
+[1347:1023/172748.295113:ERROR:atom_cache.cc(229)] Add chromium/from-privileged to kAtomsToCache
+[90m[main 2025-10-23T21:36:54.745Z][0m WindsurfWindowsMainManager: Window will close {
+  windowId: 1,
+  workspaceUri: {
+    id: 'f3f21304e4806562428736c50ef10394',
+    uri: ln {
+      scheme: 'file',
+      authority: '',
+      path: '/home/ph03nix/Programming/Flutter/driverlink-approval',
+      query: '',
+      fragment: '',
+      _formatted: 'file:///home/ph03nix/Programming/Flutter/driverlink-approval',
+      _fsPath: '/home/ph03nix/Programming/Flutter/driverlink-approval'
+    }
+  }
+}
+[91m[main 2025-10-23T21:36:54.771Z][0m [UtilityProcess id: 1, type: fileWatcher, pid: 1465]: crashed with code 15 and reason 'killed'
+[91m[main 2025-10-23T21:36:54.771Z][0m === UTILITY PROCESS CRASH REPORT ===
+[91m[main 2025-10-23T21:36:54.771Z][0m Time: 2025-10-23T21:36:54.771Z
+[91m[main 2025-10-23T21:36:54.771Z][0m PID: 1465, Exit Code: 15 (Unknown exit code (15)), Reason: killed
+[91m[main 2025-10-23T21:36:54.771Z][0m Process Type: fileWatcher
+[91m[main 2025-10-23T21:36:54.772Z][0m Process ID: 1
+[91m[main 2025-10-23T21:36:54.772Z][0m Entry Point: vs/platform/files/node/watcher/watcherMain
+[91m[main 2025-10-23T21:36:54.772Z][0m Main Process Memory: RSS=215MB, Heap=17MB, External=5MB
+[91m[main 2025-10-23T21:36:54.772Z][0m System Information:
+[91m[main 2025-10-23T21:36:54.772Z][0m   - Node Version: v20.19.0
+[91m[main 2025-10-23T21:36:54.773Z][0m   - Platform: linux_x64
+[91m[main 2025-10-23T21:36:54.773Z][0m   - Electron Version: 34.5.1
+[91m[main 2025-10-23T21:36:54.773Z][0m Active Utility Processes: 5 processes
+[91m[main 2025-10-23T21:36:54.773Z][0m Sample Processes:
+[91m[main 2025-10-23T21:36:54.773Z][0m   - extensionHost [1] (PID: 1455)
+[91m[main 2025-10-23T21:36:54.773Z][0m   - shared-process (PID: 1456)
+[91m[main 2025-10-23T21:36:54.773Z][0m   - ptyHost (PID: 1505)
+[91m[main 2025-10-23T21:36:54.773Z][0m   - fileWatcher [2] (PID: 9313)
+[91m[main 2025-10-23T21:36:54.773Z][0m   - extensionHost [2] (PID: 9329)
+[91m[main 2025-10-23T21:36:54.773Z][0m === END UTILITY PROCESS CRASH REPORT ===
+[90m[main 2025-10-23T21:36:54.922Z][0m Extension host with pid 1455 exited with code: 0, signal: unknown.
+[90m[main 2025-10-23T21:37:47.989Z][0m WindsurfWindowsMainManager: Window will load {
+  windowId: 3,
+  workspaceUri: {
+    id: 'b46bb4c15f1d90a905148fcd3b731c1a',
+    uri: ln {
+      scheme: 'file',
+      authority: '',
+      path: '/home/ph03nix/Programming/Flutter/driverlink-frontend',
+      query: '',
+      fragment: '',
+      _formatted: 'file:///home/ph03nix/Programming/Flutter/driverlink-frontend',
+      _fsPath: '/home/ph03nix/Programming/Flutter/driverlink-frontend'
+    }
+  }
+}
+[90m[main 2025-10-23T21:38:49.625Z][0m Extension host with pid 9329 exited with code: 0, signal: unknown.
+[90m[main 2025-10-23T21:38:49.786Z][0m WindsurfWindowsMainManager: Window will close {
+  windowId: 2,
+  workspaceUri: {
+    id: '76b2fab2afacd678665839203268c0dc',
+    uri: ln {
+      scheme: 'file',
+      authority: '',
+      path: '/home/ph03nix/Programming/Python/applog-backend',
+      query: '',
+      fragment: '',
+      _formatted: 'file:///home/ph03nix/Programming/Python/applog-backend',
+      _fsPath: '/home/ph03nix/Programming/Python/applog-backend'
+    }
+  }
+}
+[93m[main 2025-10-23T21:38:51.813Z][0m No ptyHost heartbeat after 6 seconds
+[13877:1023/174106.378249:ERROR:object_proxy.cc(576)] Failed to call method: org.freedesktop.DBus.Properties.Get: object_path= /org/freedesktop/portal/desktop: org.freedesktop.DBus.Error.InvalidArgs: No such interface “org.freedesktop.portal.FileChooser”
+[13877:1023/174106.378310:ERROR:select_file_dialog_linux_portal.cc(308)] Failed to read portal version property
+[90m[main 2025-10-23T21:41:06.507Z][0m WindsurfWindowsMainManager: Window will load {
+  windowId: 4,
+  workspaceUri: {
+    id: 'f3f21304e4806562428736c50ef10394',
+    uri: ln {
+      scheme: 'file',
+      authority: '',
+      path: '/home/ph03nix/Programming/Flutter/driverlink-approval',
+      query: '',
+      fragment: '',
+      _formatted: 'file:///home/ph03nix/Programming/Flutter/driverlink-approval',
+      _fsPath: '/home/ph03nix/Programming/Flutter/driverlink-approval'
+    }
+  }
+}
+[90m[main 2025-10-23T21:41:25.784Z][0m WindsurfWindowsMainManager: Window will close {
+  windowId: 3,
+  workspaceUri: {
+    id: 'b46bb4c15f1d90a905148fcd3b731c1a',
+    uri: ln {
+      scheme: 'file',
+      authority: '',
+      path: '/home/ph03nix/Programming/Flutter/driverlink-frontend',
+      query: '',
+      fragment: '',
+      _formatted: 'file:///home/ph03nix/Programming/Flutter/driverlink-frontend',
+      _fsPath: '/home/ph03nix/Programming/Flutter/driverlink-frontend'
+    }
+  }
+}
+[90m[main 2025-10-23T21:41:26.812Z][0m Extension host with pid 12458 exited with code: 0, signal: unknown.
+[90m[main 2025-10-23T21:42:01.939Z][0m WindsurfWindowsMainManager: Window will load {
+  windowId: 5,
+  workspaceUri: {
+    id: '5695c1551935f6d5b679568693f7e7a4',
+    uri: ln {
+      scheme: 'file',
+      authority: '',
+      path: '/home/ph03nix/Programming/Flutter/amacuba-notifications-panel',
+      query: '',
+      fragment: '',
+      _formatted: 'file:///home/ph03nix/Programming/Flutter/amacuba-notifications-panel',
+      _fsPath: '/home/ph03nix/Programming/Flutter/amacuba-notifications-panel'
+    }
+  }
+}
+[90m[main 2025-10-24T14:51:24.226Z][0m WindsurfWindowsMainManager: Window will close {
+  windowId: 4,
+  workspaceUri: {
+    id: 'f3f21304e4806562428736c50ef10394',
+    uri: ln {
+      scheme: 'file',
+      authority: '',
+      path: '/home/ph03nix/Programming/Flutter/driverlink-approval',
+      query: '',
+      fragment: '',
+      _formatted: 'file:///home/ph03nix/Programming/Flutter/driverlink-approval',
+      _fsPath: '/home/ph03nix/Programming/Flutter/driverlink-approval'
+    }
+  }
+}
+[91m[main 2025-10-24T14:51:24.278Z][0m [UtilityProcess id: 4, type: fileWatcher, pid: 13952]: crashed with code 15 and reason 'killed'
+[91m[main 2025-10-24T14:51:24.278Z][0m === UTILITY PROCESS CRASH REPORT ===
+[91m[main 2025-10-24T14:51:24.278Z][0m Time: 2025-10-24T14:51:24.278Z
+[91m[main 2025-10-24T14:51:24.278Z][0m PID: 13952, Exit Code: 15 (Unknown exit code (15)), Reason: killed
+[91m[main 2025-10-24T14:51:24.278Z][0m Process Type: fileWatcher
+[91m[main 2025-10-24T14:51:24.279Z][0m Process ID: 4
+[91m[main 2025-10-24T14:51:24.279Z][0m Entry Point: vs/platform/files/node/watcher/watcherMain
+[91m[main 2025-10-24T14:51:24.282Z][0m Main Process Memory: RSS=218MB, Heap=21MB, External=4MB
+[91m[main 2025-10-24T14:51:24.282Z][0m System Information:
+[91m[main 2025-10-24T14:51:24.283Z][0m   - Node Version: v20.19.0
+[91m[main 2025-10-24T14:51:24.283Z][0m   - Platform: linux_x64
+[91m[main 2025-10-24T14:51:24.283Z][0m   - Electron Version: 34.5.1
+[91m[main 2025-10-24T14:51:24.283Z][0m Active Utility Processes: 5 processes
+[91m[main 2025-10-24T14:51:24.283Z][0m Sample Processes:
+[91m[main 2025-10-24T14:51:24.283Z][0m   - shared-process (PID: 1456)
+[91m[main 2025-10-24T14:51:24.283Z][0m   - ptyHost (PID: 1505)
+[91m[main 2025-10-24T14:51:24.283Z][0m   - extensionHost [4] (PID: 13947)
+[91m[main 2025-10-24T14:51:24.283Z][0m   - extensionHost [5] (PID: 15011)
+[91m[main 2025-10-24T14:51:24.283Z][0m   - fileWatcher [5] (PID: 15016)
+[91m[main 2025-10-24T14:51:24.283Z][0m === END UTILITY PROCESS CRASH REPORT ===
+[90m[main 2025-10-24T14:51:24.428Z][0m Extension host with pid 13947 exited with code: 0, signal: unknown.
+[90m[main 2025-10-24T14:51:28.617Z][0m WindsurfWindowsMainManager: Window will close {
+  windowId: 5,
+  workspaceUri: {
+    id: '5695c1551935f6d5b679568693f7e7a4',
+    uri: ln {
+      scheme: 'file',
+      authority: '',
+      path: '/home/ph03nix/Programming/Flutter/amacuba-notifications-panel',
+      query: '',
+      fragment: '',
+      _formatted: 'file:///home/ph03nix/Programming/Flutter/amacuba-notifications-panel',
+      _fsPath: '/home/ph03nix/Programming/Flutter/amacuba-notifications-panel'
+    }
+  }
+}
+[90m[main 2025-10-24T14:51:28.626Z][0m WindsurfWindowsMainManager: Shutdown initiated, capturing current window group state
+[91m[main 2025-10-24T14:51:28.647Z][0m [UtilityProcess id: 5, type: fileWatcher, pid: 15016]: crashed with code 15 and reason 'killed'
+[91m[main 2025-10-24T14:51:28.647Z][0m === UTILITY PROCESS CRASH REPORT ===
+[91m[main 2025-10-24T14:51:28.647Z][0m Time: 2025-10-24T14:51:28.647Z
+[91m[main 2025-10-24T14:51:28.647Z][0m PID: 15016, Exit Code: 15 (Unknown exit code (15)), Reason: killed
+[91m[main 2025-10-24T14:51:28.647Z][0m Process Type: fileWatcher
+[91m[main 2025-10-24T14:51:28.647Z][0m Process ID: 5
+[91m[main 2025-10-24T14:51:28.647Z][0m Entry Point: vs/platform/files/node/watcher/watcherMain
+[91m[main 2025-10-24T14:51:28.647Z][0m Main Process Memory: RSS=214MB, Heap=21MB, External=4MB
+[91m[main 2025-10-24T14:51:28.647Z][0m System Information:
+[91m[main 2025-10-24T14:51:28.647Z][0m   - Node Version: v20.19.0
+[91m[main 2025-10-24T14:51:28.647Z][0m   - Platform: linux_x64
+[91m[main 2025-10-24T14:51:28.647Z][0m   - Electron Version: 34.5.1
+[91m[main 2025-10-24T14:51:28.647Z][0m Active Utility Processes: 3 processes
+[91m[main 2025-10-24T14:51:28.647Z][0m Sample Processes:
+[91m[main 2025-10-24T14:51:28.647Z][0m   - shared-process (PID: 1456)
+[91m[main 2025-10-24T14:51:28.647Z][0m   - ptyHost (PID: 1505)
+[91m[main 2025-10-24T14:51:28.647Z][0m   - extensionHost [5] (PID: 15011)
+[91m[main 2025-10-24T14:51:28.647Z][0m === END UTILITY PROCESS CRASH REPORT ===
+[90m[main 2025-10-24T14:51:28.733Z][0m Extension host with pid 15011 exited with code: 0, signal: unknown.
+[193076:1024/191218.193248:ERROR:object_proxy.cc(576)] Failed to call method: org.freedesktop.DBus.Properties.Get: object_path= /org/freedesktop/portal/desktop: org.freedesktop.DBus.Error.InvalidArgs: No such interface “org.freedesktop.portal.FileChooser”
+[193076:1024/191218.193298:ERROR:select_file_dialog_linux_portal.cc(308)] Failed to read portal version property
+[90m[main 2025-10-24T23:12:18.424Z][0m WindsurfWindowsMainManager: Window will load {
+  windowId: 1,
+  workspaceUri: {
+    id: 'f3f21304e4806562428736c50ef10394',
+    uri: ln {
+      scheme: 'file',
+      authority: '',
+      path: '/home/ph03nix/Programming/Flutter/driverlink-approval',
+      query: '',
+      fragment: '',
+      _formatted: 'file:///home/ph03nix/Programming/Flutter/driverlink-approval',
+      _fsPath: '/home/ph03nix/Programming/Flutter/driverlink-approval'
+    }
+  }
+}
+[90m[main 2025-10-24T23:12:18.438Z][0m update#setState idle
+[90m[main 2025-10-24T23:12:48.440Z][0m update#setState checking for updates
+[90m[main 2025-10-24T23:12:48.798Z][0m update#setState available for download
+[193115:1024/191410.168828:ERROR:gl_surface_presentation_helper.cc(260)] GetVSyncParametersIfAvailable() failed for 1 times!
+[193115:1024/191415.116731:ERROR:gl_surface_presentation_helper.cc(260)] GetVSyncParametersIfAvailable() failed for 2 times!
+[193115:1024/191511.012620:ERROR:gl_surface_presentation_helper.cc(260)] GetVSyncParametersIfAvailable() failed for 3 times!

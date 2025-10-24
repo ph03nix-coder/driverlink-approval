@@ -8,7 +8,6 @@ import 'package:driverlink_approval/providers/requests_provider.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  ApiService.getApprovalRequests().then((val) {});
   runApp(const MyApp());
 }
 

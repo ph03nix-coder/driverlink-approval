@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:driverlink_approval/providers/requests_provider.dart';
 import 'package:driverlink_approval/config/theme.dart';
 import 'package:driverlink_approval/models/request.dart';
+import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:driverlink_approval/screens/requests/document_viewer_screen.dart';
 import 'package:driverlink_approval/api/auth/auth_service.dart';
 import 'package:driverlink_approval/screens/auth/login_screen.dart';
@@ -162,29 +164,32 @@ class _RequestsScreenState extends State<RequestsScreen> {
   }
 
   Widget _buildEmptyWidget() {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.check_circle_outline,
-            size: 80,
-            color: AppTheme.secondaryColor,
-          ),
-          const SizedBox(height: 16),
-          Text(
-            'No hay solicitudes pendientes',
-            style: AppTheme.headingMedium,
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 8),
-          Text(
-            'Todas las solicitudes han sido procesadas',
-            style: AppTheme.bodyMedium,
-            textAlign: TextAlign.center,
-          ),
-        ],
+    return RefreshIndicator(
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.check_circle_outline,
+              size: 80,
+              color: AppTheme.secondaryColor,
+            ),
+            const SizedBox(height: 16),
+            Text(
+              'No hay solicitudes pendientes',
+              style: AppTheme.headingMedium,
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'Todas las solicitudes han sido procesadas',
+              style: AppTheme.bodyMedium,
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
       ),
+      onRefresh: () => context.read<RequestsProvider>().loadRequests(),
     );
   }
 
@@ -209,6 +214,29 @@ class RequestCard extends StatelessWidget {
     Key? key,
     required this.request,
   }) : super(key: key);
+
+  // Función para copiar la información del conductor al portapapeles
+  Future<void> _copyDriverInfoToClipboard() async {
+    final driverInfo = '''
+Nombre: ${request.firstName} ${request.lastName}
+Teléfono: ${request.phoneNumber}
+Vehículo: ${request.vehicleType} - ${request.vehicleModel} (${request.vehicleYear})
+Placa: ${request.vehiclePlate}
+Solicitado: ${_formatDate(request.createdAt)}
+Estado: ${_getStatusText(request.approvalStatus)}
+    ''';
+    
+    await Clipboard.setData(ClipboardData(text: driverInfo));
+    
+    // Mostrar mensaje de confirmación
+    Fluttertoast.showToast(
+      msg: 'Información copiada al portapapeles',
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      backgroundColor: Colors.green,
+      textColor: Colors.white,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -251,23 +279,36 @@ class RequestCard extends StatelessWidget {
                     ],
                   ),
                 ),
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 8,
-                    vertical: 4,
-                  ),
-                  decoration: BoxDecoration(
-                    color: _getStatusColor(request.approvalStatus),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Text(
-                    _getStatusText(request.approvalStatus),
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w500,
+                Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 4,
+                      ),
+                      decoration: BoxDecoration(
+                        color: _getStatusColor(request.approvalStatus),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Text(
+                        _getStatusText(request.approvalStatus),
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
                     ),
-                  ),
+                    const SizedBox(width: 8),
+                    IconButton(
+                      icon: const Icon(Icons.content_copy, size: 18),
+                      color: AppTheme.primaryColor,
+                      padding: EdgeInsets.zero,
+                      constraints: const BoxConstraints(),
+                      onPressed: _copyDriverInfoToClipboard,
+                      tooltip: 'Copiar información del conductor',
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -328,9 +369,9 @@ class RequestCard extends StatelessWidget {
                               );
                             },
                             icon: const Icon(Icons.assignment),
-                            label: const Text('Licencia'),
+                            label: const Text('Licencia', overflow: TextOverflow.ellipsis),
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: AppTheme.secondaryColor,
+                              backgroundColor: Colors.blue,
                               foregroundColor: Colors.white,
                             ),
                           ),
@@ -352,14 +393,14 @@ class RequestCard extends StatelessWidget {
                               );
                             },
                             icon: const Icon(Icons.person),
-                            label: const Text('Identidad'),
+                            label: const Text('Identidad', overflow: TextOverflow.ellipsis),
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: AppTheme.accentColor,
+                              backgroundColor: Colors.greenAccent,
                               foregroundColor: Colors.white,
                             ),
                           ),
                         ),
-                    ],
+                      ],
                   ),
                   const SizedBox(height: 16),
                 ],
@@ -371,15 +412,15 @@ class RequestCard extends StatelessWidget {
                 return Row(
                   children: [
                     Expanded(
-                      child: ElevatedButton.icon(
+                      child: OutlinedButton.icon(
                         onPressed: provider.isLoading
                             ? null
-                            : () => _approveRequest(context, provider),
+                            : () => _approveRequest(context, provider), 
                         icon: const Icon(Icons.check),
-                        label: const Text('Aprobar'),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: AppTheme.secondaryColor,
-                          foregroundColor: Colors.white,
+                        label: const Text('Aprobar', overflow: TextOverflow.ellipsis),
+                        style: OutlinedButton.styleFrom(
+                          foregroundColor: AppTheme.secondaryColor,
+                          side: BorderSide(color: AppTheme.secondaryColor),
                         ),
                       ),
                     ),
@@ -390,7 +431,7 @@ class RequestCard extends StatelessWidget {
                             ? null
                             : () => _rejectRequest(context, provider),
                         icon: const Icon(Icons.close),
-                        label: const Text('Rechazar'),
+                        label: const Text('Rechazar', overflow: TextOverflow.ellipsis),
                         style: OutlinedButton.styleFrom(
                           foregroundColor: AppTheme.errorColor,
                           side: BorderSide(color: AppTheme.errorColor),
@@ -466,27 +507,156 @@ class RequestCard extends StatelessWidget {
     }
   }
 
-  void _approveRequest(BuildContext context, RequestsProvider provider) async {
-    final success = await provider.approveRequest(request.id);
-    if (success && context.mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Solicitud de ${request.firstName} aprobada'),
-          backgroundColor: AppTheme.secondaryColor,
+  Future<bool?> _showConfirmationDialog(
+    BuildContext context, {
+    required String title,
+    required String content,
+    required String confirmText,
+    required Color confirmColor,
+  }) async {
+    return showDialog<bool>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(title),
+          content: Text(content),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(false),
+              child: const Text('Cancelar', style: TextStyle(color: AppTheme.textSecondaryColor)),
+            ),
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(true),
+              child: Text(confirmText, style: TextStyle(color: confirmColor)),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> _showLoadingDialog(BuildContext context) {
+    return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return const AlertDialog(
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              CircularProgressIndicator(),
+              SizedBox(height: 16),
+              Text('Procesando...'),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> _approveRequest(BuildContext context, RequestsProvider provider) async {
+    final confirmed = await _showConfirmationDialog(
+      context,
+      title: 'Confirmar Aprobación',
+      content: '¿Estás seguro de que deseas aprobar la solicitud de ${request.firstName} ${request.lastName}?',
+      confirmText: 'Aprobar',
+      confirmColor: AppTheme.secondaryColor,
+    );
+
+    if (confirmed == true && context.mounted) {
+      // Show loading dialog
+      Navigator.of(context, rootNavigator: true).push(
+        PageRouteBuilder(
+          opaque: false,
+          barrierDismissible: false,
+          pageBuilder: (BuildContext context, _, __) => const PopScope(
+            canPop: false,
+            child: Center(
+              child: CircularProgressIndicator(),
+            ),
+          ),
         ),
       );
+
+      try {
+        final success = await provider.approveRequest(request.id);
+        // Remove loading dialog
+        if (context.mounted) {
+          Navigator.of(context, rootNavigator: true).pop();
+          if (success) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('Solicitud de ${request.firstName} aprobada'),
+                backgroundColor: AppTheme.secondaryColor,
+              ),
+            );
+          }
+        }
+      } catch (e) {
+        // Remove loading dialog in case of error
+        if (context.mounted) {
+          Navigator.of(context, rootNavigator: true).pop();
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Ocurrió un error al procesar la solicitud'),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
+      }
     }
   }
 
-  void _rejectRequest(BuildContext context, RequestsProvider provider) async {
-    final success = await provider.rejectRequest(request.id);
-    if (success && context.mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Solicitud de ${request.firstName} rechazada'),
-          backgroundColor: AppTheme.errorColor,
+  Future<void> _rejectRequest(BuildContext context, RequestsProvider provider) async {
+    final confirmed = await _showConfirmationDialog(
+      context,
+      title: 'Confirmar Rechazo',
+      content: '¿Estás seguro de que deseas rechazar la solicitud de ${request.firstName} ${request.lastName}?',
+      confirmText: 'Rechazar',
+      confirmColor: AppTheme.errorColor,
+    );
+
+    if (confirmed == true && context.mounted) {
+      // Show loading dialog
+      Navigator.of(context, rootNavigator: true).push(
+        PageRouteBuilder(
+          opaque: false,
+          barrierDismissible: false,
+          pageBuilder: (BuildContext context, _, __) => const PopScope(
+            canPop: false,
+            child: Center(
+              child: CircularProgressIndicator(),
+            ),
+          ),
         ),
       );
+
+      try {
+        final success = await provider.rejectRequest(request.id);
+        // Remove loading dialog
+        if (context.mounted) {
+          Navigator.of(context, rootNavigator: true).pop();
+          if (success) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('Solicitud de ${request.firstName} rechazada'),
+                backgroundColor: AppTheme.errorColor,
+              ),
+            );
+          }
+        }
+      } catch (e) {
+        // Remove loading dialog in case of error
+        if (context.mounted) {
+          Navigator.of(context, rootNavigator: true).pop();
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Ocurrió un error al procesar la solicitud'),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
+      }
     }
   }
 }
