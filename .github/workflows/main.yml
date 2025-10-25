@@ -1,0 +1,102 @@
+name: Flutter Android Builds
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+env:
+  FLUTTER_HOME: /opt/flutter
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Set up Flutter (latest stable)
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+
+      # ⚡ Cache Flutter, Gradle and Pub dependencies
+      - name: Cache Flutter, Gradle and Pub
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.pub-cache
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+            ${{ env.FLUTTER_HOME }}
+          key: ${{ runner.os }}-flutter-${{ hashFiles('pubspec.lock') }}
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Precache Flutter
+        run: flutter precache --android
+
+      # 🧩 Extract version from pubspec.yaml
+      - name: Get version from pubspec.yaml
+        id: get_version
+        run: |
+          VERSION=$(grep '^version:' pubspec.yaml | awk '{print $2}' | tr -d '\r')
+          VERSION_TAG="v${VERSION}"
+          echo "Base version: $VERSION_TAG"
+
+          # Check if tag already exists
+          if git fetch --tags && git tag | grep -q "$VERSION_TAG"; then
+            VERSION_TAG="${VERSION_TAG}-${GITHUB_RUN_NUMBER}"
+            echo "Version tag already exists. Using $VERSION_TAG"
+          fi
+
+          echo "version_tag=$VERSION_TAG" >> $GITHUB_OUTPUT
+
+      # 🔹 Build debug when push to dev
+      - name: Build Debug APK
+        if: github.ref == 'refs/heads/dev'
+        run: flutter build apk --debug
+
+      # 🔹 Build release when push to main
+      - name: Build Release APK
+        if: github.ref == 'refs/heads/main'
+        run: flutter build apk --release
+
+      # 🧾 List artifacts for debugging
+      - name: List generated APKs
+        run: ls -R build/app/outputs/flutter-apk
+
+      # 🔹 Upload artifacts
+      - name: Upload APKs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-${{ github.ref_name }}
+          path: build/app/outputs/flutter-apk/*.apk
+
+      # 🔹 Create GitHub Release (only on main)
+      - name: Create GitHub Release
+        if: github.ref == 'refs/heads/main'
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ steps.get_version.outputs.version_tag }}
+          name: Release ${{ steps.get_version.outputs.version_tag }}
+          body: |
+            🚀 Automatic release build from **main** branch.
+            📦 Version: ${{ steps.get_version.outputs.version_tag }}
+          artifacts: |
+            build/app/outputs/flutter-apk/*.apk
+          token: ${{ secrets.GITHUB_TOKEN }}
