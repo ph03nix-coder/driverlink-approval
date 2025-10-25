@@ -55,14 +55,19 @@ jobs:
         run: |
           VERSION=$(grep '^version:' pubspec.yaml | awk '{print $2}' | tr -d '\r')
           VERSION_TAG="v${VERSION}"
-          echo "Base version: $VERSION_TAG"
 
-          # Check if tag already exists
+          # If tag exists, append run number to keep it unique
           if git fetch --tags && git tag | grep -q "$VERSION_TAG"; then
             VERSION_TAG="${VERSION_TAG}-${GITHUB_RUN_NUMBER}"
-            echo "Version tag already exists. Using $VERSION_TAG"
+            echo "Tag already exists, using $VERSION_TAG"
           fi
 
+          # Add branch suffix (optional for clarity)
+          if [ "$GITHUB_REF_NAME" = "dev" ]; then
+            VERSION_TAG="${VERSION_TAG}-dev"
+          fi
+
+          echo "Final version tag: $VERSION_TAG"
           echo "version_tag=$VERSION_TAG" >> $GITHUB_OUTPUT
 
       # 🔹 Build debug when push to dev
@@ -87,15 +92,15 @@ jobs:
           name: app-${{ github.ref_name }}
           path: build/app/outputs/flutter-apk/*.apk
 
-      # 🔹 Create GitHub Release (only on main)
+      # 🔹 Create GitHub Release (for both main & dev)
       - name: Create GitHub Release
-        if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/dev'
         uses: ncipollo/release-action@v1
         with:
           tag: ${{ steps.get_version.outputs.version_tag }}
           name: Release ${{ steps.get_version.outputs.version_tag }}
           body: |
-            🚀 Automatic release build from **main** branch.
+            🚀 Automatic release build from **${{ github.ref_name }}** branch.
             📦 Version: ${{ steps.get_version.outputs.version_tag }}
           artifacts: |
             build/app/outputs/flutter-apk/*.apk
