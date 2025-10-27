@@ -415,3 +415,61 @@
 [193115:1024/191410.168828:ERROR:gl_surface_presentation_helper.cc(260)] GetVSyncParametersIfAvailable() failed for 1 times!
 [193115:1024/191415.116731:ERROR:gl_surface_presentation_helper.cc(260)] GetVSyncParametersIfAvailable() failed for 2 times!
 [193115:1024/191511.012620:ERROR:gl_surface_presentation_helper.cc(260)] GetVSyncParametersIfAvailable() failed for 3 times!
+[90m[main 2025-10-25T12:26:33.522Z][0m WindsurfWindowsMainManager: Window will close {
+  windowId: 1,
+  workspaceUri: {
+    id: 'f3f21304e4806562428736c50ef10394',
+    uri: ln {
+      scheme: 'file',
+      authority: '',
+      path: '/home/ph03nix/Programming/Flutter/driverlink-approval',
+      query: '',
+      fragment: '',
+      _formatted: 'file:///home/ph03nix/Programming/Flutter/driverlink-approval',
+      _fsPath: '/home/ph03nix/Programming/Flutter/driverlink-approval'
+    }
+  }
+}
+[90m[main 2025-10-25T12:26:33.539Z][0m WindsurfWindowsMainManager: Shutdown initiated, capturing current window group state
+[91m[main 2025-10-25T12:26:33.551Z][0m [UtilityProcess id: 1, type: fileWatcher, pid: 193189]: crashed with code 15 and reason 'killed'
+[91m[main 2025-10-25T12:26:33.551Z][0m === UTILITY PROCESS CRASH REPORT ===
+[91m[main 2025-10-25T12:26:33.551Z][0m Time: 2025-10-25T12:26:33.551Z
+[91m[main 2025-10-25T12:26:33.552Z][0m PID: 193189, Exit Code: 15 (Unknown exit code (15)), Reason: killed
+[91m[main 2025-10-25T12:26:33.552Z][0m Process Type: fileWatcher
+[91m[main 2025-10-25T12:26:33.552Z][0m Process ID: 1
+[91m[main 2025-10-25T12:26:33.552Z][0m Entry Point: vs/platform/files/node/watcher/watcherMain
+[91m[main 2025-10-25T12:26:33.552Z][0m Main Process Memory: RSS=205MB, Heap=16MB, External=4MB
+[91m[main 2025-10-25T12:26:33.552Z][0m System Information:
+[91m[main 2025-10-25T12:26:33.552Z][0m   - Node Version: v20.19.0
+[91m[main 2025-10-25T12:26:33.552Z][0m   - Platform: linux_x64
+[91m[main 2025-10-25T12:26:33.552Z][0m   - Electron Version: 34.5.1
+[91m[main 2025-10-25T12:26:33.552Z][0m Active Utility Processes: 3 processes
+[91m[main 2025-10-25T12:26:33.552Z][0m Sample Processes:
+[91m[main 2025-10-25T12:26:33.552Z][0m   - shared-process (PID: 193188)
+[91m[main 2025-10-25T12:26:33.553Z][0m   - extensionHost [1] (PID: 193190)
+[91m[main 2025-10-25T12:26:33.553Z][0m   - ptyHost (PID: 193238)
+[91m[main 2025-10-25T12:26:33.553Z][0m === END UTILITY PROCESS CRASH REPORT ===
+[90m[main 2025-10-25T12:26:33.569Z][0m Extension host with pid 193190 exited with code: 0, signal: unknown.
+[396797:1027/151551.996725:ERROR:object_proxy.cc(576)] Failed to call method: org.freedesktop.DBus.Properties.Get: object_path= /org/freedesktop/portal/desktop: org.freedesktop.DBus.Error.InvalidArgs: No such interface “org.freedesktop.portal.FileChooser”
+[396797:1027/151551.996780:ERROR:select_file_dialog_linux_portal.cc(308)] Failed to read portal version property
+[90m[main 2025-10-27T19:15:52.192Z][0m WindsurfWindowsMainManager: Window will load {
+  windowId: 1,
+  workspaceUri: {
+    id: 'f3f21304e4806562428736c50ef10394',
+    uri: ln {
+      scheme: 'file',
+      authority: '',
+      path: '/home/ph03nix/Programming/Flutter/driverlink-approval',
+      query: '',
+      fragment: '',
+      _formatted: 'file:///home/ph03nix/Programming/Flutter/driverlink-approval',
+      _fsPath: '/home/ph03nix/Programming/Flutter/driverlink-approval'
+    }
+  }
+}
+[90m[main 2025-10-27T19:15:52.204Z][0m update#setState idle
+[90m[main 2025-10-27T19:16:22.206Z][0m update#setState checking for updates
+[90m[main 2025-10-27T19:16:22.446Z][0m update#setState available for download
+[396837:1027/151706.878289:ERROR:gl_surface_presentation_helper.cc(260)] GetVSyncParametersIfAvailable() failed for 1 times!
+[396837:1027/151724.949468:ERROR:gl_surface_presentation_helper.cc(260)] GetVSyncParametersIfAvailable() failed for 2 times!
+[396837:1027/151731.521491:ERROR:gl_surface_presentation_helper.cc(260)] GetVSyncParametersIfAvailable() failed for 3 times!
