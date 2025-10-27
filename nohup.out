@@ -473,3 +473,43 @@
 [396837:1027/151706.878289:ERROR:gl_surface_presentation_helper.cc(260)] GetVSyncParametersIfAvailable() failed for 1 times!
 [396837:1027/151724.949468:ERROR:gl_surface_presentation_helper.cc(260)] GetVSyncParametersIfAvailable() failed for 2 times!
 [396837:1027/151731.521491:ERROR:gl_surface_presentation_helper.cc(260)] GetVSyncParametersIfAvailable() failed for 3 times!
+Opening in existing browser session.
+Opening in existing browser session.
+[90m[main 2025-10-27T19:50:49.938Z][0m WindsurfWindowsMainManager: Window will close {
+  windowId: 1,
+  workspaceUri: {
+    id: 'f3f21304e4806562428736c50ef10394',
+    uri: ln {
+      scheme: 'file',
+      authority: '',
+      path: '/home/ph03nix/Programming/Flutter/driverlink-approval',
+      query: '',
+      fragment: '',
+      _formatted: 'file:///home/ph03nix/Programming/Flutter/driverlink-approval',
+      _fsPath: '/home/ph03nix/Programming/Flutter/driverlink-approval'
+    }
+  }
+}
+[90m[main 2025-10-27T19:50:49.958Z][0m WindsurfWindowsMainManager: Shutdown initiated, capturing current window group state
+[90m[main 2025-10-27T19:50:49.993Z][0m Extension host with pid 396920 exited with code: 0, signal: unknown.
+[401525:1027/155056.513007:ERROR:object_proxy.cc(576)] Failed to call method: org.freedesktop.DBus.Properties.Get: object_path= /org/freedesktop/portal/desktop: org.freedesktop.DBus.Error.InvalidArgs: No such interface “org.freedesktop.portal.FileChooser”
+[401525:1027/155056.513078:ERROR:select_file_dialog_linux_portal.cc(308)] Failed to read portal version property
+[90m[main 2025-10-27T19:50:56.708Z][0m WindsurfWindowsMainManager: Window will load {
+  windowId: 1,
+  workspaceUri: {
+    id: 'f3f21304e4806562428736c50ef10394',
+    uri: ln {
+      scheme: 'file',
+      authority: '',
+      path: '/home/ph03nix/Programming/Flutter/driverlink-approval',
+      query: '',
+      fragment: '',
+      _formatted: 'file:///home/ph03nix/Programming/Flutter/driverlink-approval',
+      _fsPath: '/home/ph03nix/Programming/Flutter/driverlink-approval'
+    }
+  }
+}
+[90m[main 2025-10-27T19:50:56.724Z][0m update#setState idle
+[90m[main 2025-10-27T19:51:26.725Z][0m update#setState checking for updates
+[90m[main 2025-10-27T19:51:26.965Z][0m update#setState available for download
+[401566:1027/155158.116950:ERROR:gl_surface_presentation_helper.cc(260)] GetVSyncParametersIfAvailable() failed for 1 times!

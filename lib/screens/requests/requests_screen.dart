@@ -165,31 +165,33 @@ class _RequestsScreenState extends State<RequestsScreen> {
 
   Widget _buildEmptyWidget() {
     return RefreshIndicator(
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.check_circle_outline,
-              size: 80,
-              color: AppTheme.secondaryColor,
-            ),
-            const SizedBox(height: 16),
-            Text(
-              'No hay solicitudes pendientes',
-              style: AppTheme.headingMedium,
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 8),
-            Text(
-              'Todas las solicitudes han sido procesadas',
-              style: AppTheme.bodyMedium,
-              textAlign: TextAlign.center,
-            ),
-          ],
+      onRefresh: () => context.read<RequestsProvider>().loadRequests(),
+      child: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.check_circle_outline,
+                size: 80,
+                color: AppTheme.secondaryColor,
+              ),
+              const SizedBox(height: 16),
+              Text(
+                'No hay solicitudes pendientes',
+                style: AppTheme.headingMedium,
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 8),
+              Text(
+                'Todas las solicitudes han sido procesadas',
+                style: AppTheme.bodyMedium,
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
         ),
       ),
-      onRefresh: () => context.read<RequestsProvider>().loadRequests(),
     );
   }
 
