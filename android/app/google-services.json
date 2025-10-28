@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "471581338173",
+    "project_id": "driverlink-1b59e",
+    "storage_bucket": "driverlink-1b59e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:471581338173:android:9ec7998dd4115b0cf19854",
+        "android_client_info": {
+          "package_name": "com.ph03nix.driverlink_approval"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNcSpKzUlm8zHijAL6kks5TDjQ-XXjC3k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
