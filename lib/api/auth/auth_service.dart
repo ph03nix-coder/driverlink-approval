@@ -174,7 +174,7 @@ class AuthService {
   Future<bool> updateFCMToken(String token) async {
     try {
       final dio = ApiClient.createDio(token: token);
-      final response = await dio.put('/fcm/token', data: {'fcm_token': token});
+      final response = await dio.post('/fcm/token', data: {'fcm_token': token});
 
       if (response.statusCode == 200) {
         return true;

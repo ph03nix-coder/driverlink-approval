@@ -8,9 +8,16 @@ import 'package:provider/provider.dart';
 import 'package:driverlink_approval/config/router.dart';
 import 'package:driverlink_approval/providers/requests_provider.dart';
 import 'package:driverlink_approval/services/fcm_service.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:driverlink_approval/firebase_options.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Initialize Firebase
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   // Check the auth status before running the app
   await AuthService().checkAuthStatus();

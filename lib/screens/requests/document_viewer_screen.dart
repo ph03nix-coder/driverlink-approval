@@ -70,12 +70,12 @@ class _DocumentViewerScreenState extends State<DocumentViewerScreen> {
         foregroundColor: Colors.white,
         elevation: 0,
         actions: [
-          if (_documentBytes != null)
-            IconButton(
-              icon: const Icon(Icons.download),
-              onPressed: _downloadDocument,
-              tooltip: 'Descargar imagen',
-            ),
+          // if (_documentBytes != null)
+          //   IconButton(
+          //     icon: const Icon(Icons.download),
+          //     onPressed: _downloadDocument,
+          //     tooltip: 'Descargar imagen',
+          //   ),
         ],
       ),
       body: _buildBody(),
@@ -234,28 +234,28 @@ class _DocumentViewerScreenState extends State<DocumentViewerScreen> {
           // Botones de acción
           Row(
             children: [
-              Expanded(
-                child: ElevatedButton.icon(
-                  onPressed: _downloadDocument,
-                  icon: const Icon(Icons.download),
-                  label: const Text('Descargar'),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppTheme.primaryColor,
-                    foregroundColor: Colors.white,
-                  ),
-                ),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: OutlinedButton.icon(
-                  onPressed: _shareDocument,
-                  icon: const Icon(Icons.share),
-                  label: const Text('Compartir'),
-                  style: OutlinedButton.styleFrom(
-                    foregroundColor: AppTheme.primaryColor,
-                  ),
-                ),
-              ),
+              // Expanded(
+              //   child: ElevatedButton.icon(
+              //     onPressed: _downloadDocument,
+              //     icon: const Icon(Icons.download),
+              //     label: const Text('Descargar'),
+              //     style: ElevatedButton.styleFrom(
+              //       backgroundColor: AppTheme.primaryColor,
+              //       foregroundColor: Colors.white,
+              //     ),
+              //   ),
+              // ),
+              // const SizedBox(width: 12),
+              // Expanded(
+              //   child: OutlinedButton.icon(
+              //     onPressed: _shareDocument,
+              //     icon: const Icon(Icons.share),
+              //     label: const Text('Compartir'),
+              //     style: OutlinedButton.styleFrom(
+              //       foregroundColor: AppTheme.primaryColor,
+              //     ),
+              //   ),
+              // ),
             ],
           ),
         ],

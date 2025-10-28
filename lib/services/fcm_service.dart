@@ -8,6 +8,7 @@ class FCMService {
   late String _fcmToken;
 
   void initialize() {
+    
     _firebaseMessaging.requestPermission(alert: true, badge: true, sound: true);
 
     _firebaseMessaging.getToken().then((token) async {
