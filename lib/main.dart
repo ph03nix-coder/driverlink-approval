@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ProviderWrapper(
       child: MaterialApp.router(
-        title: 'DriverLink Approval Panel',
+        title: 'DriverLink - Panel de Aprobación',
         theme: AppTheme.lightTheme,
         routerConfig: router,
         debugShowCheckedModeBanner: false,

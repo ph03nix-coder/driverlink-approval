@@ -3,7 +3,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:label="driverlink_approval"
+        android:label="DriverLink - Panel de Aprobación"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
