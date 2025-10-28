@@ -14,6 +14,10 @@ final router = GoRouter(
       path: '/requests',
       builder: (context, state) => const RequestsScreen(),
     ),
+    GoRoute(
+      path: '/',
+      builder: (context, state) => const RequestsScreen(),
+    )
   ],
   redirect: (context, state) {
     final isAuthenticated = AuthService().isAuthenticated.value;
