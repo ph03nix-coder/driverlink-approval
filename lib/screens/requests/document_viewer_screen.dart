@@ -2,7 +2,6 @@ import 'dart:typed_data';
 import 'package:driverlink_approval/config/theme.dart';
 import 'package:driverlink_approval/services/document_service.dart';
 import 'package:flutter/material.dart';
-import 'package:image_gallery_saver/image_gallery_saver.dart';
 
 class DocumentViewerScreen extends StatefulWidget {
   final int requestId;
@@ -344,43 +343,42 @@ class _DocumentViewerScreenState extends State<DocumentViewerScreen> {
   String _formatFileSize(int bytes) {
     if (bytes < 1024) return '$bytes B';
     if (bytes < 1024 * 1024) return '${(bytes / 1024).toStringAsFixed(1)} KB';
-    if (bytes < 1024 * 1024 * 1024)
-      return '${(bytes / (1024 * 1024)).toStringAsFixed(1)} MB';
+    if (bytes < 1024 * 1024 * 1024) return '${(bytes / (1024 * 1024)).toStringAsFixed(1)} MB';
     return '${(bytes / (1024 * 1024 * 1024)).toStringAsFixed(1)} GB';
   }
 
   Future<void> _downloadDocument() async {
     if (_documentBytes == null) return;
 
-    try {
-      final result = await ImageGallerySaver.saveImage(
-        _documentBytes!,
-        quality: 100,
-        name: 'document_${widget.requestId}_${widget.documentType}',
-      );
+    // try {
+    //   final result = await ImageGallerySaver.saveImage(
+    //     _documentBytes!,
+    //     quality: 100,
+    //     name: 'document_${widget.requestId}_${widget.documentType}',
+    //   );
 
-      if (mounted) {
-        if (result['isSuccess']) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Imagen guardada en la galería'),
-              backgroundColor: AppTheme.secondaryColor,
-            ),
-          );
-        } else {
-          throw Exception('Failed to save image: ${result['errorMessage']}');
-        }
-      }
-    } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Error al guardar la imagen: $e'),
-            backgroundColor: AppTheme.errorColor,
-          ),
-        );
-      }
-    }
+    //   if (mounted) {
+    //     if (result['isSuccess']) {
+    //       ScaffoldMessenger.of(context).showSnackBar(
+    //         const SnackBar(
+    //           content: Text('Imagen guardada en la galería'),
+    //           backgroundColor: AppTheme.secondaryColor,
+    //         ),
+    //       );
+    //     } else {
+    //       throw Exception('Failed to save image: ${result['errorMessage']}');
+    //     }
+    //   }
+    // } catch (e) {
+    //   if (mounted) {
+    //     ScaffoldMessenger.of(context).showSnackBar(
+    //       SnackBar(
+    //         content: Text('Error al guardar la imagen: $e'),
+    //         backgroundColor: AppTheme.errorColor,
+    //       ),
+    //     );
+    //   }
+    // }
   }
 
   void _shareDocument() {
