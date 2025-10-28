@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:driverlink_approval/api/auth/auth_service.dart';
 import 'package:driverlink_approval/config/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 import 'package:driverlink_approval/config/router.dart';
 import 'package:driverlink_approval/providers/requests_provider.dart';
@@ -15,7 +16,11 @@ Future<void> main() async {
   await AuthService().checkAuthStatus();
 
   if (Platform.isAndroid || Platform.isIOS) {
-    FCMService().initialize();
+    try {
+      FCMService().initialize();
+    } catch (e) {
+      Logger().e('Error initializing FCM: $e');
+    }
   }
   runApp(const MyApp());
 }
