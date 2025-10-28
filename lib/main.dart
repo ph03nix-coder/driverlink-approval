@@ -1,13 +1,22 @@
-import 'package:driverlink_approval/api/api_service.dart';
+import 'dart:io';
+
+import 'package:driverlink_approval/api/auth/auth_service.dart';
 import 'package:driverlink_approval/config/theme.dart';
-import 'package:driverlink_approval/models/request.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:driverlink_approval/config/router.dart';
 import 'package:driverlink_approval/providers/requests_provider.dart';
+import 'package:driverlink_approval/services/fcm_service.dart';
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Check the auth status before running the app
+  await AuthService().checkAuthStatus();
+
+  if (Platform.isAndroid || Platform.isIOS) {
+    FCMService().initialize();
+  }
   runApp(const MyApp());
 }
 

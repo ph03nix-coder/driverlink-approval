@@ -171,42 +171,54 @@ class _DocumentViewerScreenState extends State<DocumentViewerScreen> {
           const SizedBox(height: 16),
 
           // Imagen del documento
-          Container(
-            decoration: BoxDecoration(
-              border: Border.all(color: AppTheme.textSecondaryColor),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(12),
-              child: Image.memory(
-                _documentBytes!,
-                fit: BoxFit.contain,
-                errorBuilder: (context, error, stackTrace) {
-                  return Container(
-                    padding: const EdgeInsets.all(24),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
-                          Icons.broken_image,
-                          size: 64,
-                          color: AppTheme.errorColor,
-                        ),
-                        const SizedBox(height: 16),
-                        Text(
-                          'Error al mostrar la imagen',
-                          style: AppTheme.bodyMedium,
-                          textAlign: TextAlign.center,
-                        ),
-                        Text(
-                          'El archivo podría estar corrupto o en un formato no soportado',
-                          style: AppTheme.bodySmall,
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
-                    ),
-                  );
-                },
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      FullScreenImageViewer(imageBytes: _documentBytes!),
+                ),
+              );
+            },
+            child: Container(
+              height: 400, // Altura máxima para la vista previa
+              decoration: BoxDecoration(
+                border: Border.all(color: AppTheme.textSecondaryColor),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: Image.memory(
+                  _documentBytes!,
+                  fit: BoxFit.contain,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Container(
+                      padding: const EdgeInsets.all(24),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            Icons.broken_image,
+                            size: 64,
+                            color: AppTheme.errorColor,
+                          ),
+                          const SizedBox(height: 16),
+                          Text(
+                            'Error al mostrar la imagen',
+                            style: AppTheme.bodyMedium,
+                            textAlign: TextAlign.center,
+                          ),
+                          Text(
+                            'El archivo podría estar corrupto o en un formato no soportado',
+                            style: AppTheme.bodySmall,
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
               ),
             ),
           ),
@@ -349,6 +361,33 @@ class _DocumentViewerScreenState extends State<DocumentViewerScreen> {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
         content: Text('Funcionalidad de compartir pendiente de implementar'),
+      ),
+    );
+  }
+}
+
+class FullScreenImageViewer extends StatelessWidget {
+  final Uint8List imageBytes;
+
+  const FullScreenImageViewer({Key? key, required this.imageBytes})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.black,
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        elevation: 0,
+        iconTheme: const IconThemeData(color: Colors.white),
+      ),
+      body: Center(
+        child: InteractiveViewer(
+          panEnabled: true,
+          minScale: 0.5,
+          maxScale: 4.0,
+          child: Image.memory(imageBytes),
+        ),
       ),
     );
   }

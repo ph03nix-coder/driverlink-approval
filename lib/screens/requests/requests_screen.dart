@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:driverlink_approval/providers/requests_provider.dart';
@@ -86,17 +87,8 @@ class _RequestsScreenState extends State<RequestsScreen> {
                 );
 
                 if (shouldLogout == true) {
-                  // Realizar el logout
+                  // Realizar el logout, la navegación es manejada por el router
                   await AuthService().logout();
-                  
-                  // Navegar a la pantalla de login y eliminar todas las rutas anteriores
-                  if (mounted) {
-                    Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(builder: (context) => const LoginScreen()),
-                      (route) => false,
-                    );
-                  }
                 }
               },
             ),
@@ -143,12 +135,14 @@ class _RequestsScreenState extends State<RequestsScreen> {
               style: AppTheme.headingMedium,
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 8),
-            Text(
-              provider.error!,
-              style: AppTheme.bodyMedium,
-              textAlign: TextAlign.center,
-            ),
+            if(kDebugMode)
+              const SizedBox(height: 8),
+            if(kDebugMode)
+              Text(
+                provider.error!,
+                style: AppTheme.bodyMedium,
+                textAlign: TextAlign.center,
+              ),
             const SizedBox(height: 24),
             ElevatedButton(
               onPressed: () {
@@ -228,7 +222,7 @@ class RequestCard extends StatelessWidget {
     final driverInfo = '''
 Nombre: ${request.firstName} ${request.lastName}
 Teléfono: ${request.phoneNumber}
-Vehículo: ${request.vehicleType} - ${request.vehicleModel} (${request.vehicleYear})
+Vehículo: ${_getVehicleType(request)} - ${request.vehicleModel} (${request.vehicleYear})
 Placa: ${request.vehiclePlate}
 Solicitado: ${_formatDate(request.createdAt)}
 Estado: ${_getStatusText(request.approvalStatus)}
@@ -244,6 +238,21 @@ Estado: ${_getStatusText(request.approvalStatus)}
       backgroundColor: Colors.green,
       textColor: Colors.white,
     );
+  }
+
+  String _getVehicleType(Request request) {
+    switch (request.vehicleType) {
+      case 'car':
+        return 'Automóvil';
+      case 'motorcycle':
+        return 'Motocicleta';
+      case 'van':
+        return 'Van';
+      case 'truck':
+        return 'Camión';
+      default:
+        return 'Tipo de vehículo no especificado';
+    }
   }
 
   @override
@@ -326,8 +335,7 @@ Estado: ${_getStatusText(request.approvalStatus)}
             _buildInfoRow(
               icon: Icons.directions_car,
               label: 'Vehículo',
-              value:
-                  '${request.vehicleType} - ${request.vehicleModel} (${request.vehicleYear})',
+              value: '${_getVehicleType(request)} - ${request.vehicleModel} (${request.vehicleYear})',
             ),
             const SizedBox(height: 8),
             _buildInfoRow(
@@ -340,13 +348,6 @@ Estado: ${_getStatusText(request.approvalStatus)}
               icon: Icons.calendar_today,
               label: 'Solicitado',
               value: _formatDate(request.createdAt),
-            ),
-            const SizedBox(height: 8),
-            _buildInfoRow(
-              icon: Icons.location_on,
-              label: 'Última ubicación',
-              value:
-                  '${request.currentLatitude?.toStringAsFixed(4) ?? 'N/A'}, ${request.currentLongitude?.toStringAsFixed(4) ?? 'N/A'}',
             ),
 
             const SizedBox(height: 16),

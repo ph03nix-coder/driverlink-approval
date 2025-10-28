@@ -1,39 +1,47 @@
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import '../../services/secure_storage_service.dart';
 import '../api_client.dart';
 
 /// Service for handling authentication related API calls
 class AuthService {
-  final Dio _dio;
+  // Singleton instance
+  static final AuthService _instance = AuthService._internal();
+  factory AuthService() => _instance;
+  AuthService._internal();
 
-  AuthService({Dio? dio}) : _dio = dio ?? ApiClient.dio;
+  final Dio _dio = ApiClient.dio;
+
+  // ValueNotifier to notify listeners about authentication changes
+  final ValueNotifier<bool> isAuthenticated = ValueNotifier<bool>(false);
 
   /// Get the current authentication token
   Future<String?> getCurrentToken() async {
     return await SecureStorageService.getToken();
   }
 
-  /// Check if there's a valid token in secure storage
-  Future<bool> hasValidToken() async {
+  /// Check if there's a valid token in secure storage and update the auth state
+  Future<void> checkAuthStatus() async {
     try {
       final token = await getCurrentToken();
-      if (token == null) return false;
+      if (token == null) {
+        isAuthenticated.value = false;
+        return;
+      }
 
       // Try to get user info to validate the token
       await getCurrentUserInfo(token);
-      return true;
+      isAuthenticated.value = true;
     } on DioException catch (e) {
-      // If token is invalid (401 Unauthorized), remove it from storage
       if (e.response?.statusCode == 401) {
         await SecureStorageService.deleteToken();
       }
-      return false;
+      isAuthenticated.value = false;
     } catch (e) {
-      // For any other error, assume token is invalid
       log('Error validating token', error: e);
-      return false;
+      isAuthenticated.value = false;
     }
   }
 
@@ -44,7 +52,6 @@ class AuthService {
     required String password,
   }) async {
     try {
-      // Use the default dio instance which will automatically handle the token
       final response = await _dio.post(
         '/auth/login',
         data: {'email': email, 'password': password},
@@ -56,8 +63,8 @@ class AuthService {
           throw Exception('No se recibió un token de acceso válido');
         }
 
-        // Save token to secure storage
         await SecureStorageService.saveToken(token);
+        isAuthenticated.value = true; // Notify listeners
         return token;
       } else if (response.statusCode == 422) {
         throw InvalidCredentialsException(
@@ -95,9 +102,11 @@ class AuthService {
           'No se pudo conectar al servidor. Por favor, verifica tu conexión',
         );
       } else {
+        isAuthenticated.value = false;
         throw Exception('Error de conexión: ${e.message}');
       }
     } catch (e) {
+      isAuthenticated.value = false;
       throw Exception('Error inesperado: $e');
     }
   }
@@ -105,6 +114,7 @@ class AuthService {
   /// Logout the current user by removing the token
   Future<void> logout() async {
     await SecureStorageService.deleteToken();
+    isAuthenticated.value = false; // Notify listeners
   }
 
   /// Register a new user
@@ -161,15 +171,15 @@ class AuthService {
     }
   }
 
-  Future<Map<String, dynamic>> updateFCMToken(String token) async {
+  Future<bool> updateFCMToken(String token) async {
     try {
       final dio = ApiClient.createDio(token: token);
       final response = await dio.put('/fcm/token', data: {'fcm_token': token});
 
       if (response.statusCode == 200) {
-        return response.data;
+        return true;
       } else {
-        throw Exception('Failed to update FCM token');
+        return false;
       }
     } on DioException catch (e) {
       if (e.response?.statusCode == 401) {

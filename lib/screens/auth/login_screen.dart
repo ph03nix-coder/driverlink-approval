@@ -31,19 +31,17 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() => _isLoading = true);
 
     try {
-      final token = await AuthService().login(
-          email: _emailController.text, password: _passwordController.text);
+      await AuthService().login(
+        email: _emailController.text,
+        password: _passwordController.text,
+      );
 
-      await SecureStorageService.saveToken(token);
-
-      if (mounted) {
-        GoRouter.of(context).go('/requests');
-      }
+      // Navigation is now handled by the router's refreshListenable
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Error: ${e.toString()}'),
+            content: Text('Error al iniciar sesión: ${e.toString()}'),
             backgroundColor: AppTheme.errorColor,
           ),
         );
@@ -80,7 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                     // Título
                     Text(
-                      'DriverLink Verification Panel',
+                      'Panel de verificación de DriverLink',
                       style: AppTheme.headingLarge,
                       textAlign: TextAlign.center,
                     ),

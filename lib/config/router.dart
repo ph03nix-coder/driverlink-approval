@@ -1,9 +1,10 @@
+import 'package:driverlink_approval/api/auth/auth_service.dart';
 import 'package:driverlink_approval/screens/auth/login_screen.dart';
 import 'package:driverlink_approval/screens/requests/requests_screen.dart';
 import 'package:go_router/go_router.dart';
-import 'package:driverlink_approval/services/secure_storage_service.dart';
 
 final router = GoRouter(
+  refreshListenable: AuthService().isAuthenticated,
   routes: [
     GoRoute(
       path: '/login',
@@ -14,12 +15,19 @@ final router = GoRouter(
       builder: (context, state) => const RequestsScreen(),
     ),
   ],
-  redirect: (context, state) async {
-    final token = await SecureStorageService.getToken();
-    if (token != null) {
+  redirect: (context, state) {
+    final isAuthenticated = AuthService().isAuthenticated.value;
+    final isLoggingIn = state.matchedLocation == '/login';
+
+    if (!isAuthenticated) {
+      return isLoggingIn ? null : '/login';
+    }
+
+    if (isLoggingIn) {
       return '/requests';
     }
-    return '/login';
+
+    return null;
   },
-  initialLocation: '/login',
+  initialLocation: '/',
 );
