@@ -22,13 +22,7 @@ Future<void> main() async {
   // Check the auth status before running the app
   await AuthService().checkAuthStatus();
 
-  if (Platform.isAndroid || Platform.isIOS) {
-    try {
-      FCMService().initialize();
-    } catch (e) {
-      Logger().e('Error initializing FCM: $e');
-    }
-  }
+  
   runApp(const MyApp());
 }
 

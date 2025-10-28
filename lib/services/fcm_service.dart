@@ -7,20 +7,23 @@ class FCMService {
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
   late String _fcmToken;
 
-  void initialize() {
-    
+  void initialize() async {
+
+    final apiClient = AuthService();
+    final authToken = await apiClient.getCurrentToken();
+
     _firebaseMessaging.requestPermission(alert: true, badge: true, sound: true);
 
     _firebaseMessaging.getToken().then((token) async {
       _fcmToken = token!;
 
       final apiClient = AuthService();
-      final success = await apiClient.updateFCMToken(token);
+      final success = await apiClient.updateFCMToken(authToken!, token);
       if (!success) {
         // we need to refresh the token
         _firebaseMessaging.getToken().then((token) async {
           _fcmToken = token!;
-          final success = await apiClient.updateFCMToken(token);
+          final success = await apiClient.updateFCMToken(authToken, token);
           if (!success) {
             Logger().e('Error suscribiendo a FCM: $token');
           }
@@ -32,12 +35,12 @@ class FCMService {
       _fcmToken = token;
 
       final apiClient = AuthService();
-      final success = await apiClient.updateFCMToken(token);
+      final success = await apiClient.updateFCMToken(authToken!, token);
       if (!success) {
         // we need to refresh the token
         _firebaseMessaging.getToken().then((token) async {
           _fcmToken = token!;
-          final success = await apiClient.updateFCMToken(token);
+          final success = await apiClient.updateFCMToken(authToken, token);
           if (!success) {
             Logger().e('Error suscribiendo a FCM: $token');
           }

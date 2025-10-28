@@ -1,5 +1,9 @@
+import 'dart:io';
+
+import 'package:driverlink_approval/services/fcm_service.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 import 'package:driverlink_approval/providers/requests_provider.dart';
 import 'package:driverlink_approval/config/theme.dart';
@@ -25,6 +29,14 @@ class _RequestsScreenState extends State<RequestsScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<RequestsProvider>().loadRequests();
     });
+
+    if (Platform.isAndroid || Platform.isIOS) {
+      try {
+        FCMService().initialize();
+      } catch (e) {
+        Logger().e('Error initializing FCM: $e');
+      }
+    }
   }
 
   @override
