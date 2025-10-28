@@ -7,6 +7,25 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:471581338173:android:386adef5ff9f657af19854",
+        "android_client_info": {
+          "package_name": "com.amacuba.notificationspanel.amacubastatistics"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNcSpKzUlm8zHijAL6kks5TDjQ-XXjC3k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:471581338173:android:9ec7998dd4115b0cf19854",
         "android_client_info": {
           "package_name": "com.ph03nix.driverlink_approval"
